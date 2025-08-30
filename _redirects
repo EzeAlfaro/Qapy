@@ -1,0 +1,21 @@
+# Redirect common paths to sections
+/demo              /#contacto           301
+/contact           /#contacto           301
+/contacto          /#contacto           301
+/services          /#servicios          301
+/servicios         /#servicios          301
+/about             /#nosotros           301
+/nosotros          /#nosotros           301
+/casos             /#casos              301
+/cases             /#casos              301
+/proceso           /#proceso            301
+/process           /#proceso            301
+
+# WhatsApp redirect for easier sharing
+/whatsapp          https://wa.me/5491123456789?text=Hola!%20Me%20interesa%20conocer%20m%C3%A1s%20sobre%20los%20servicios%20de%20QAPY.%20%C2%BFPodemos%20agendar%20una%20demo%3F    301
+
+# Download links for case studies
+/downloads/qapy-mini-llm-beta    /assets/qapy-mini-llm-beta.zip    200
+
+# SPA fallback
+/*                 /index.html          200

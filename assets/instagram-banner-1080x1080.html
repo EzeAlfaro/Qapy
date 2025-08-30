@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAPY Instagram Banner 1080x1080</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0B0D12;
+            --text-light: #EAEAF2;
+            --accent-blue: #3A7BFF;
+            --accent-violet: #6B5BFF;
+            --accent-teal: #2DD4BF;
+            --gray-800: #1F2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .banner {
+            width: 1080px;
+            height: 1080px;
+            background: radial-gradient(ellipse at center, rgba(58, 123, 255, 0.15) 0%, transparent 60%),
+                        linear-gradient(135deg, var(--bg-dark) 0%, #0f1419 50%, var(--bg-dark) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            opacity: 0.15;
+        }
+
+        .particle-1 {
+            width: 8px;
+            height: 8px;
+            top: 15%;
+            left: 20%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+        }
+
+        .particle-2 {
+            width: 12px;
+            height: 12px;
+            top: 25%;
+            right: 15%;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-teal));
+        }
+
+        .particle-3 {
+            width: 6px;
+            height: 6px;
+            bottom: 30%;
+            left: 10%;
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue));
+        }
+
+        .particle-4 {
+            width: 10px;
+            height: 10px;
+            bottom: 20%;
+            right: 25%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+        }
+
+        .particle-5 {
+            width: 4px;
+            height: 4px;
+            top: 60%;
+            left: 5%;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-blue));
+        }
+
+        .particle-6 {
+            width: 8px;
+            height: 8px;
+            top: 70%;
+            right: 8%;
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-violet));
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 120px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+        }
+
+        .tagline {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-violet) 50%, var(--accent-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 60px;
+            line-height: 1.2;
+            max-width: 800px;
+        }
+
+        .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text-light);
+            opacity: 0.9;
+            margin-bottom: 80px;
+            line-height: 1.4;
+            max-width: 700px;
+        }
+
+        .cta-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .website-cta {
+            font-family: 'Poppins', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent-teal);
+            text-decoration: none;
+            padding: 20px 40px;
+            border: 3px solid var(--accent-teal);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            background: rgba(45, 212, 191, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-info {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+
+        .contact-info .highlight {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        /* Subtle glow effect */
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(58, 123, 255, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <!-- Particle effects -->
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+        <div class="particle particle-4"></div>
+        <div class="particle particle-5"></div>
+        <div class="particle particle-6"></div>
+
+        <!-- Main content -->
+        <div class="logo">QAPY</div>
+        <div class="tagline">Innovación argentina en<br>Tecnología, IA y Media</div>
+        <div class="description">Consultora tecnológica especializada en desarrollo de software, inteligencia artificial y soluciones creativas</div>
+        
+        <div class="cta-container">
+            <div class="website-cta">Conocé nuestros servicios</div>
+            <div class="contact-info">
+                <span class="highlight">WhatsApp:</span> +54 9 11 2345-6789<br>
+                <span class="highlight">Web:</span> qapy.com.ar
+            </div>
+        </div>
+    </div>
+</body>
+</html>

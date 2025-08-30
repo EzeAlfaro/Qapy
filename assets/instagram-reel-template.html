@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAPY Instagram Reel Template (9:16)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0B0D12;
+            --text-light: #EAEAF2;
+            --accent-blue: #3A7BFF;
+            --accent-violet: #6B5BFF;
+            --accent-teal: #2DD4BF;
+            --gray-800: #1F2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .reel-container {
+            width: 1080px;
+            height: 1920px;
+            background: radial-gradient(ellipse at center, rgba(58, 123, 255, 0.2) 0%, transparent 50%),
+                        linear-gradient(135deg, var(--bg-dark) 0%, #0f1419 30%, #1a1f2e 70%, var(--bg-dark) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        .particle-1 {
+            width: 20px;
+            height: 20px;
+            top: 10%;
+            left: 15%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            animation: float1 4s ease-in-out infinite;
+        }
+
+        .particle-2 {
+            width: 15px;
+            height: 15px;
+            top: 20%;
+            right: 10%;
+            background: linear-gradient(135deg, var(--accent-violet), var(--accent-teal));
+            animation: float2 5s ease-in-out infinite 1s;
+        }
+
+        .particle-3 {
+            width: 25px;
+            height: 25px;
+            bottom: 15%;
+            left: 10%;
+            background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue));
+            animation: float3 6s ease-in-out infinite 2s;
+        }
+
+        .particle-4 {
+            width: 12px;
+            height: 12px;
+            bottom: 25%;
+            right: 20%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+            animation: float1 4.5s ease-in-out infinite 0.5s;
+        }
+
+        /* Main text animations */
+        .question {
+            font-family: 'Poppins', sans-serif;
+            font-size: 72px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 60px;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(50px) scale(0.8);
+            animation: slideInScale 1s ease-out 0.5s forwards;
+        }
+
+        .highlight-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 84px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-violet) 50%, var(--accent-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 80px;
+            line-height: 1;
+            opacity: 0;
+            transform: translateX(-100px);
+            animation: slideInLeft 1.2s ease-out 1.8s forwards;
+            background-size: 200% 200%;
+        }
+
+        .brand-reveal {
+            font-family: 'Poppins', sans-serif;
+            font-size: 96px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+            opacity: 0;
+            transform: translateY(-50px) rotateX(90deg);
+            animation: flipIn 1s ease-out 3.2s forwards;
+        }
+
+        .cta-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--accent-teal);
+            opacity: 0;
+            transform: scale(0);
+            animation: popIn 0.8s ease-out 4.5s forwards;
+        }
+
+        .website-url {
+            font-family: 'Inter', sans-serif;
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--text-light);
+            opacity: 0.9;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out 5.5s forwards;
+        }
+
+        /* Kinetic typography animations */
+        @keyframes slideInScale {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes flipIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Particle animations */
+        @keyframes float1 {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) scale(1);
+            }
+            25% {
+                transform: translateY(-30px) translateX(20px) scale(1.1);
+            }
+            50% {
+                transform: translateY(-15px) translateX(-10px) scale(0.9);
+            }
+            75% {
+                transform: translateY(-40px) translateX(25px) scale(1.05);
+            }
+        }
+
+        @keyframes float2 {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-25px) translateX(-15px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(-35px) translateX(20px) rotate(240deg);
+            }
+        }
+
+        @keyframes float3 {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) scale(1) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) translateX(15px) scale(1.2) rotate(180deg);
+            }
+        }
+
+        /* Gradient animation for highlight text */
+        .highlight-text {
+            animation: slideInLeft 1.2s ease-out 1.8s forwards, gradientShift 3s ease-in-out 3s infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Pulsing glow effect */
+        .brand-reveal {
+            animation: flipIn 1s ease-out 3.2s forwards, pulse 2s ease-in-out 4.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(58, 123, 255, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(58, 123, 255, 0.6), 0 0 60px rgba(107, 91, 255, 0.4);
+            }
+        }
+
+        /* Timeline indicator */
+        .timeline {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .timeline-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet), var(--accent-teal));
+            width: 0;
+            animation: progressBar 7s linear infinite;
+        }
+
+        @keyframes progressBar {
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Instructions overlay */
+        .instructions {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: var(--text-light);
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 7s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reel-container">
+        <!-- Animated particles -->
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+        <div class="particle particle-4"></div>
+
+        <!-- Main content with kinetic typography -->
+        <div class="question">¿Primera LLM<br>argentina?</div>
+        <div class="highlight-text">CONOCÉ</div>
+        <div class="brand-reveal">QAPY</div>
+        <div class="cta-text">Descargá gratis nuestra Mini-LLM</div>
+        <div class="website-url">qapy.com.ar</div>
+
+        <!-- Timeline progress bar -->
+        <div class="timeline">
+            <div class="timeline-progress"></div>
+        </div>
+
+        <!-- Production instructions -->
+        <div class="instructions">
+            <strong>Instrucciones de producción:</strong><br>
+            • Duración total: 7 segundos<br>
+            • Texto aparece secuencialmente con efectos kinéticos<br>
+            • Partículas animadas de fondo<br>
+            • Música: Upbeat tech/electronic (opcional)<br>
+            • Exportar en formato vertical 9:16 (1080x1920)
+        </div>
+    </div>
+
+    <script>
+        // Restart animation every 8 seconds for preview
+        setInterval(() => {
+            const elements = document.querySelectorAll('.question, .highlight-text, .brand-reveal, .cta-text, .website-url');
+            elements.forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // Trigger reflow
+                el.style.animation = null;
+            });
+        }, 8000);
+    </script>
+</body>
+</html>
