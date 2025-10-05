@@ -1,1469 +1,767 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
-    <!-- SEO Meta Tags -->
-    <title>QAPY - Innovación argentina en Tecnología, IA y Media</title>
-    <meta name="description" content="Consultora tecnológica argentina especializada en IA, desarrollo de software y media creativa. Soluciones innovadoras con la primera LLM argentina.">
-    <meta name="keywords" content="consultora tecnología argentina, desarrollo IA, mini-LLM, software development, media creativa, inteligencia artificial, arquitectura software, cloud computing, devops argentina">
-    <meta name="author" content="QAPY">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://qapy.com.ar/">
-    
-    <!-- Language and Geographic Targeting -->
-    <meta name="geo.region" content="AR">
-    <meta name="geo.placename" content="Argentina">
-    <meta name="language" content="Spanish">
-    <meta name="distribution" content="global">
-    <meta name="rating" content="general">
-    
-    <!-- Additional SEO Meta Tags -->
-    <meta name="theme-color" content="#3A7BFF">
-    <meta name="msapplication-TileColor" content="#3A7BFF">
-    <meta name="application-name" content="QAPY">
-    <meta name="apple-mobile-web-app-title" content="QAPY">
-    <meta name="msapplication-tooltip" content="QAPY - Consultora Tecnológica Argentina">
-    <meta name="msapplication-starturl" content="https://qapy.com.ar/">
-    
-    <!-- Business Information -->
-    <meta name="business:contact_data:street_address" content="Argentina">
-    <meta name="business:contact_data:locality" content="Argentina">
-    <meta name="business:contact_data:region" content="AR">
-    <meta name="business:contact_data:country_name" content="Argentina">
-    <meta name="business:contact_data:phone_number" content="+54-911-2345-6789">
-    <meta name="business:contact_data:website" content="https://qapy.com.ar">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://qapy.com.ar/">
-    <meta property="og:title" content="QAPY - Innovación argentina en Tecnología, IA y Media">
-    <meta property="og:description" content="Consultora tecnológica argentina especializada en IA, desarrollo de software y media creativa. Soluciones innovadoras con la primera LLM argentina.">
-    <meta property="og:image" content="https://qapy.com.ar/assets/og-image.jpg">
-    <meta property="og:image:alt" content="QAPY - Logo y branding de la consultora tecnológica argentina">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:locale" content="es_AR">
-    <meta property="og:site_name" content="QAPY">
-    <meta property="og:updated_time" content="2025-01-01T00:00:00+00:00">
-    
-    <!-- Article specific (for better social sharing) -->
-    <meta property="article:author" content="QAPY">
-    <meta property="article:publisher" content="https://qapy.com.ar">
-    <meta property="article:section" content="Technology">
-    <meta property="article:tag" content="Inteligencia Artificial">
-    <meta property="article:tag" content="Desarrollo Software">
-    <meta property="article:tag" content="Consultora Tecnológica">
-    <meta property="article:tag" content="Argentina">
-    <meta property="article:tag" content="LLM">
-    <meta property="article:tag" content="Media Creativa">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@qapy_ar">
-    <meta name="twitter:creator" content="@qapy_ar">
-    <meta name="twitter:url" content="https://qapy.com.ar/">
-    <meta name="twitter:title" content="QAPY - Innovación argentina en Tecnología, IA y Media">
-    <meta name="twitter:description" content="Consultora tecnológica argentina especializada en IA, desarrollo de software y media creativa. Soluciones innovadoras con la primera LLM argentina.">
-    <meta name="twitter:image" content="https://qapy.com.ar/assets/twitter-image.jpg">
-    <meta name="twitter:image:alt" content="QAPY - Consultora tecnológica argentina especializada en IA y desarrollo de software">
-    <meta name="twitter:domain" content="qapy.com.ar">
-    
-    <!-- LinkedIn -->
-    <meta property="og:image:secure_url" content="https://qapy.com.ar/assets/og-image.jpg">
-    <meta name="linkedin:owner" content="QAPY">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-    
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Preload critical images for better performance -->
-    <link rel="preload" as="image" href="/assets/case-tech.webp" type="image/webp" media="(min-width: 768px)">
-    <link rel="preload" as="image" href="/assets/case-ai.webp" type="image/webp" media="(min-width: 768px)">
-    <link rel="preload" as="image" href="/assets/case-media.webp" type="image/webp" media="(min-width: 768px)">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Custom Tailwind Configuration -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'bg-dark': '#0B0D12',
-                        'text-light': '#EAEAF2',
-                        'accent-blue': '#3A7BFF',
-                        'accent-violet': '#6B5BFF',
-                        'accent-teal': '#2DD4BF',
-                        'gray-800': '#1F2937',
-                        'gray-700': '#374151',
-                        'gray-600': '#4B5563'
-                    },
-                    fontFamily: {
-                        'poppins': ['Poppins', 'sans-serif'],
-                        'inter': ['Inter', 'sans-serif']
-                    },
-                    fontSize: {
-                        'hero': '3.5rem',
-                        'section': '2.25rem',
-                        'card': '1.5rem'
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Structured Data / JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "QAPY",
-        "alternateName": "QAPY - Consultora Tecnológica",
-        "url": "https://qapy.com.ar",
-        "logo": "https://qapy.com.ar/assets/og-image.jpg",
-        "description": "Consultora tecnológica argentina especializada en IA, desarrollo de software y media creativa. Soluciones innovadoras con la primera LLM argentina.",
-        "foundingDate": "2024",
-        "foundingLocation": {
-            "@type": "Country",
-            "name": "Argentina"
-        },
-        "areaServed": {
-            "@type": "Country",
-            "name": "Argentina"
-        },
-        "knowsAbout": [
-            "Inteligencia Artificial",
-            "Desarrollo de Software",
-            "Media Creativa",
-            "Arquitectura de Software",
-            "Cloud Computing",
-            "Machine Learning",
-            "LLM (Large Language Models)",
-            "Desarrollo Web",
-            "Aplicaciones Móviles",
-            "Automatización",
-            "DevOps",
-            "Consultoría Tecnológica"
-        ],
-        "serviceType": [
-            "Consultoría Tecnológica",
-            "Desarrollo de Software",
-            "Inteligencia Artificial",
-            "Media Creativa",
-            "Arquitectura de Sistemas",
-            "Desarrollo Web",
-            "Aplicaciones Móviles"
-        ],
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+54-911-2345-6789",
-            "contactType": "customer service",
-            "availableLanguage": ["Spanish", "English"],
-            "areaServed": "AR"
-        },
-        "sameAs": [
-            "https://www.linkedin.com/company/qapy",
-            "https://www.instagram.com/qapy.ar"
-        ],
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Servicios QAPY",
-            "itemListElement": [
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Arquitectura & Integración",
-                        "description": "Diseñamos arquitecturas escalables y conectamos sistemas legacy con tecnologías modernas."
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Desarrollo de IA",
-                        "description": "Soluciones de inteligencia artificial incluyendo la primera LLM argentina."
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Media Creativa",
-                        "description": "Producción audiovisual y contenido creativo con tecnologías de IA generativa."
-                    }
-                }
-            ]
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BloomWatch – NASA Space Apps 2025</title>
+  <meta name="description" content="BloomWatch: Monitoreo satelital de floraciones (HLSS30/Sentinel-2) con Google Earth Engine. MRBI, unmixing espectral, series mensuales, anomalías y validación ciudadana." />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --primary-green:#00d4aa;--primary-yellow:#ffd23f;--orange-bloom:#ff6b47;
+      --blue-accent:#4f46e5;--dark-blue:#0f172a;--light-gray:#f8fafc;--white:#ffffff;
+      --purple-accent:#7c3aed;--pink-accent:#ec4899;--cyan-accent:#06b6d4;
+      --rose-accent:#f43f5e;--lime-accent:#65a30d;--indigo-accent:#4338ca;
+      --emerald-accent:#10b981;--amber-accent:#f59e0b;--violet-accent:#8b5cf6;
+      --shadow:0 25px 50px rgba(15,23,42,.15);--shadow-hover:0 35px 70px rgba(15,23,42,.25);
+      --shadow-colored:0 20px 40px rgba(0,212,170,.2);
+      --border-glow:0 0 20px rgba(0,212,170,.3);
+      --text-glow:0 0 30px rgba(0,212,170,.4);
     }
-    </script>
-
-    <!-- Website Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "QAPY",
-        "url": "https://qapy.com.ar",
-        "description": "Consultora tecnológica argentina especializada en IA, desarrollo de software y media creativa.",
-        "inLanguage": "es-AR",
-        "publisher": {
-            "@type": "Organization",
-            "name": "QAPY"
-        },
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "https://qapy.com.ar/#servicios",
-            "query-input": "required name=search_term_string"
-        }
+    body{
+      font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;
+      line-height:1.6;color:var(--white);background:var(--dark-blue);
+      min-height:100vh;overflow-x:hidden;position:relative;
     }
-    </script>
-
-    <!-- Professional Service Schema -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "QAPY - Consultora Tecnológica",
-        "image": "https://qapy.com.ar/assets/og-image.jpg",
-        "description": "Consultora tecnológica argentina que combina desarrollo de software, inteligencia artificial y creatividad digital para transformar ideas en soluciones reales.",
-        "url": "https://qapy.com.ar",
-        "telephone": "+54-911-2345-6789",
-        "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "AR",
-            "addressLocality": "Argentina"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": -34.6118,
-            "longitude": -58.3960
-        },
-        "openingHours": "Mo-Fr 09:00-18:00",
-        "priceRange": "$$",
-        "serviceArea": {
-            "@type": "Country",
-            "name": "Argentina"
-        },
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Servicios Tecnológicos QAPY",
-            "itemListElement": [
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Consultoría en Inteligencia Artificial",
-                        "category": "Technology Consulting"
-                    }
-                },
-                {
-                    "@type": "Offer", 
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Desarrollo de Software",
-                        "category": "Software Development"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service", 
-                        "name": "Media Creativa y Producción Audiovisual",
-                        "category": "Creative Services"
-                    }
-                }
-            ]
-        }
+    body::before{
+      content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+      background:
+        radial-gradient(circle at 15% 85%,rgba(0,212,170,.08) 0%,transparent 40%),
+        radial-gradient(circle at 85% 15%,rgba(79,70,229,.08) 0%,transparent 40%),
+        radial-gradient(circle at 45% 45%,rgba(124,58,237,.06) 0%,transparent 40%),
+        radial-gradient(circle at 75% 25%,rgba(255,107,71,.06) 0%,transparent 40%),
+        radial-gradient(circle at 25% 75%,rgba(255,210,63,.05) 0%,transparent 40%);
+      z-index:-1;animation:backgroundShift 30s ease-in-out infinite;
     }
-    </script>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles/main.css">
+    @keyframes backgroundShift{0%,100%{opacity:1}50%{opacity:0.8}}
+    .container{max-width:1400px;margin:0 auto;padding:0 20px}
+    header{
+      background:rgba(15,23,42,.98);backdrop-filter:blur(25px);border-bottom:1px solid rgba(0,212,170,.2);
+      padding:1.5rem 0;position:sticky;top:0;z-index:1000;transition:all 0.3s ease;
+      box-shadow:0 8px 32px rgba(15,23,42,.3);
+    }
+    .header-content{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+    .logo{display:flex;align-items:center;gap:15px;font-size:1.6rem;font-weight:800}
+    .logo img{height:50px;width:auto;filter:drop-shadow(var(--border-glow))}
+    .logo-text{
+      color:var(--primary-green);font-weight:900;text-shadow:var(--text-glow);
+      letter-spacing:-0.02em;
+    }
+    .nasa-badge{
+      background:var(--blue-accent);color:var(--white);padding:12px 20px;
+      border-radius:30px;font-weight:700;text-transform:uppercase;font-size:.9rem;
+      letter-spacing:1px;white-space:nowrap;box-shadow:var(--shadow-colored);
+      border:1px solid rgba(0,212,170,.3);position:relative;overflow:hidden;
+    }
+    .nasa-badge::before{
+      content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+      transition:left 0.5s ease;
+    }
+    .nasa-badge:hover::before{left:100%}
+    .lang-toggle{display:flex;gap:10px}
+    .lang-btn{
+      border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);
+      padding:8px 16px;border-radius:25px;cursor:pointer;font-weight:600;
+      color:var(--white);transition:all 0.3s ease;backdrop-filter:blur(10px);
+    }
+    .lang-btn.active{
+      background:var(--primary-green);border-color:var(--primary-green);
+      box-shadow:var(--border-glow);color:var(--dark-blue);
+    }
+    .lang-btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.2)}
+    .space-apps-banner{
+      display:flex;justify-content:center;align-items:center;
+      margin:2rem 0;padding:1.5rem;background:rgba(15,23,42,.6);
+      backdrop-filter:blur(20px);border-radius:25px;border:1px solid rgba(0,212,170,.2);
+      box-shadow:var(--shadow-colored);position:relative;overflow:hidden;
+    }
+    .space-apps-banner::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,rgba(0,212,170,.1) 60deg,transparent 120deg);
+      z-index:-1;animation:rotate 20s linear infinite;
+    }
+    @keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    .space-apps-banner img{
+      max-width:100%;height:auto;max-height:120px;
+      filter:drop-shadow(var(--border-glow));transition:transform 0.3s ease;
+    }
+    .space-apps-banner:hover img{transform:scale(1.05)}
+    .hero{
+      background:rgba(15,23,42,.4);backdrop-filter:blur(25px);border:1px solid rgba(0,212,170,.3);
+      padding:5rem 2rem;margin-top:2rem;border-radius:35px;box-shadow:var(--shadow-hover);
+      position:relative;overflow:hidden;text-align:center;
+    }
+    .hero::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 45deg at 30% 30%,transparent 0deg,rgba(0,212,170,.05) 90deg,transparent 180deg);
+      z-index:-1;animation:rotate 30s linear infinite reverse;
+    }
+    .hero h1{
+      font-size:clamp(2.5rem,5vw,4rem);margin-bottom:1rem;font-weight:900;
+      color:var(--white);text-shadow:var(--text-glow);
+      letter-spacing:-0.02em;line-height:1.1;
+    }
+    .gradient{
+      color:var(--primary-green);text-shadow:var(--text-glow);
+      position:relative;
+    }
+    .gradient::after{
+      content:'';position:absolute;bottom:-2px;left:0;width:100%;height:3px;
+      background:var(--primary-green);border-radius:2px;
+      box-shadow:var(--border-glow);
+    }
+    .hero-subtitle{
+      text-align:center;font-size:1.3rem;color:rgba(255,255,255,.8);
+      margin-bottom:2rem;font-weight:500;
+    }
+    .section{
+      background:rgba(15,23,42,.3);backdrop-filter:blur(25px);border:1px solid rgba(0,212,170,.2);
+      padding:3.5rem 2.5rem;margin:2.5rem auto;border-radius:30px;box-shadow:var(--shadow-hover);
+      position:relative;overflow:hidden;
+    }
+    .section::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 90deg at 70% 20%,transparent 0deg,rgba(0,212,170,.03) 120deg,transparent 240deg);
+      z-index:-1;animation:rotate 40s linear infinite;
+    }
+    .section-title{
+      font-size:2.5rem;margin-bottom:1.5rem;position:relative;padding-left:50px;
+      color:var(--white);font-weight:800;letter-spacing:-0.02em;
+    }
+    .section-title::before{
+      content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+      width:8px;height:40px;background:var(--primary-green);
+      border-radius:4px;box-shadow:var(--border-glow);
+    }
+    .global-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:2rem}
+    .location-card{
+      background:rgba(15,23,42,.5);backdrop-filter:blur(20px);border:1px solid rgba(0,212,170,.3);
+      padding:2.5rem 2rem;border-radius:25px;text-align:center;transition:all 0.4s ease;
+      position:relative;overflow:hidden;box-shadow:var(--shadow);
+    }
+    .location-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 180deg at 50% 50%,transparent 0deg,rgba(0,212,170,.05) 60deg,transparent 120deg);
+      z-index:-1;opacity:0;transition:opacity 0.3s ease;
+    }
+    .location-card:hover{
+      transform:translateY(-10px) scale(1.02);border-color:var(--primary-green);
+      box-shadow:var(--shadow-colored);
+    }
+    .location-card:hover::before{opacity:1}
+    .location-card h4{color:var(--white);font-size:1.3rem;font-weight:700;margin-bottom:0.5rem}
+    .location-card p{color:rgba(255,255,255,.7);font-size:1rem;margin-bottom:0.5rem}
+    .flag{font-size:2.5rem;margin-bottom:1rem;filter:drop-shadow(0 0 10px rgba(255,255,255,.3))}
+    .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:2rem}
+    .tech-card{
+      background:rgba(15,23,42,.4);backdrop-filter:blur(20px);border:1px solid rgba(0,212,170,.25);
+      padding:2.5rem;border-radius:25px;border-left:4px solid var(--primary-green);
+      transition:all 0.4s ease;position:relative;overflow:hidden;box-shadow:var(--shadow);
+    }
+    .tech-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 270deg at 20% 80%,transparent 0deg,rgba(0,212,170,.04) 90deg,transparent 180deg);
+      z-index:-1;opacity:0;transition:opacity 0.3s ease;
+    }
+    .tech-card:hover{
+      transform:translateY(-8px);border-color:var(--primary-green);
+      box-shadow:var(--shadow-colored);
+    }
+    .tech-card:hover::before{opacity:1}
+    .tech-card h3{color:var(--white);font-size:1.4rem;margin-bottom:1rem;font-weight:700}
+    .tech-card p{color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:0.8rem}
+    .indices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2rem}
+    .index-box{
+      border:2px solid var(--primary-green);border-radius:20px;padding:2rem;
+      text-align:center;transition:all 0.4s ease;background:rgba(15,23,42,.4);
+      backdrop-filter:blur(20px);position:relative;overflow:hidden;box-shadow:var(--shadow);
+    }
+    .index-box::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,rgba(0,212,170,.06) 120deg,transparent 240deg);
+      z-index:-1;opacity:0;transition:opacity 0.3s ease;
+    }
+    .index-box:hover{
+      transform:translateY(-8px) scale(1.05);border-color:var(--primary-green);
+      box-shadow:var(--shadow-colored);
+    }
+    .index-box:hover::before{opacity:1}
+    .index-box h4{color:var(--white);font-size:1.2rem;margin-bottom:0.8rem;font-weight:700}
+    .index-box p{color:rgba(255,255,255,.7);font-size:0.9rem}
+    .gee-section{
+      background:rgba(15,23,42,.6);color:var(--white);padding:4rem 2.5rem;
+      border-radius:35px;margin:2.5rem auto;position:relative;overflow:hidden;
+      box-shadow:var(--shadow-hover);border:1px solid rgba(0,212,170,.3);
+    }
+    .gee-section::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,rgba(0,212,170,.08) 60deg,rgba(79,70,229,.05) 120deg,transparent 180deg);
+      z-index:0;animation:rotate 25s linear infinite;
+    }
+    .gee-title{
+      text-align:center;margin-bottom:1.5rem;font-size:2.5rem;
+      font-weight:900;text-shadow:var(--text-glow);
+      position:relative;z-index:1;color:var(--white);
+    }
+    .iframe-container{
+      background:rgba(15,23,42,.7);backdrop-filter:blur(25px);
+      padding:20px;border-radius:25px;margin-top:2rem;
+      box-shadow:var(--shadow-hover);border:1px solid rgba(0,212,170,.3);
+      position:relative;z-index:1;
+    }
+    .mrbi-legend{
+      background:rgba(15,23,42,.8);backdrop-filter:blur(20px);
+      padding:2rem;border-radius:20px;display:inline-block;
+      margin:2rem auto;border:1px solid rgba(0,212,170,.3);
+      position:relative;z-index:1;box-shadow:var(--shadow);
+    }
+    .legend-items{display:flex;gap:1rem;align-items:center}
+    .legend-item{display:flex;gap:.35rem;align-items:center}
+    .legend-color{width:26px;height:18px;border-radius:3px}
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:2rem}
+    .feature-item{
+      background:rgba(15,23,42,.5);backdrop-filter:blur(20px);
+      padding:2rem;border-radius:20px;border:1px solid rgba(0,212,170,.3);
+      transition:all 0.4s ease;position:relative;overflow:hidden;box-shadow:var(--shadow);
+    }
+    .feature-item::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 45deg at 80% 20%,transparent 0deg,rgba(0,212,170,.04) 90deg,transparent 180deg);
+      z-index:-1;opacity:0;transition:opacity 0.3s ease;
+    }
+    .feature-item:hover{
+      transform:translateY(-5px);border-color:var(--primary-green);
+      box-shadow:var(--shadow-colored);
+    }
+    .feature-item:hover::before{opacity:1}
+    .feature-item h4{color:var(--white);font-size:1.1rem;font-weight:600}
+    .cta-section{
+      background:rgba(15,23,42,.6);color:var(--white);padding:4rem 2.5rem;
+      border-radius:35px;text-align:center;position:relative;overflow:hidden;
+      box-shadow:var(--shadow-hover);border:1px solid rgba(0,212,170,.3);
+    }
+    .cta-section::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,rgba(0,212,170,.06) 60deg,rgba(255,107,71,.04) 120deg,transparent 180deg);
+      z-index:0;animation:rotate 35s linear infinite reverse;
+    }
+    .cta-title{font-size:2.5rem;font-weight:900;margin-bottom:1rem;position:relative;z-index:1;color:var(--white)}
+    .cta-text{font-size:1.2rem;margin-bottom:2rem;opacity:0.9;position:relative;z-index:1}
+    .cta-button{
+      display:inline-block;background:var(--primary-green);color:var(--dark-blue);
+      padding:15px 30px;border-radius:50px;text-decoration:none;font-weight:700;
+      margin:0.5rem;transition:all 0.4s ease;border:2px solid transparent;
+      position:relative;z-index:1;box-shadow:var(--shadow-colored);
+    }
+    .cta-button:hover{
+      transform:translateY(-3px);background:var(--white);color:var(--dark-blue);
+      box-shadow:var(--shadow-hover);
+    }
+    .impact-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem}
+    .impact-item{
+      display:flex;gap:15px;padding:2rem;background:rgba(15,23,42,.5);
+      backdrop-filter:blur(20px);border-radius:25px;border:1px solid rgba(0,212,170,.3);
+      transition:all 0.4s ease;position:relative;overflow:hidden;box-shadow:var(--shadow);
+    }
+    .impact-item::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 135deg at 30% 70%,transparent 0deg,rgba(0,212,170,.04) 90deg,transparent 180deg);
+      z-index:-1;opacity:0;transition:opacity 0.3s ease;
+    }
+    .impact-item:hover{
+      transform:translateY(-8px);border-color:var(--primary-green);
+      box-shadow:var(--shadow-colored);
+    }
+    .impact-item:hover::before{opacity:1}
+    .impact-item span{font-size:2rem;filter:drop-shadow(0 0 10px rgba(255,255,255,.3))}
+    .impact-item h4{color:var(--white);font-size:1.2rem;margin-bottom:0.5rem;font-weight:700}
+    .impact-item p{color:rgba(255,255,255,.8);font-size:0.95rem;line-height:1.5}
+    footer{
+      background:rgba(15,23,42,.95);color:var(--white);padding:4rem 0;
+      margin-top:3rem;border-radius:35px 35px 0 0;position:relative;overflow:hidden;
+      border-top:1px solid rgba(0,212,170,.3);
+    }
+    footer::before{
+      content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+      background:conic-gradient(from 0deg at 50% 0%,transparent 0deg,rgba(0,212,170,.05) 60deg,transparent 120deg);
+      z-index:0;animation:rotate 50s linear infinite;
+    }
+    .footer-content{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:2rem;margin-bottom:2rem;position:relative;z-index:1;
+    }
+    .footer-section h4{
+      color:var(--primary-green);margin-bottom:1rem;font-size:1.3rem;
+      font-weight:700;text-shadow:var(--text-glow);
+    }
+    .footer-section ul{list-style:none}
+    .footer-section li{
+      margin-bottom:0.6rem;opacity:0.8;transition:opacity 0.3s ease;
+      color:rgba(255,255,255,.9);
+    }
+    .footer-section li:hover{opacity:1;color:var(--primary-green)}
+    .footer-bottom{
+      text-align:center;border-top:1px solid rgba(255,255,255,.2);
+      padding-top:2rem;opacity:0.8;position:relative;z-index:1;
+      font-size:1rem;
+    }
+    @media(max-width:768px){
+      .hero{padding:2.5rem 1.5rem}
+      .section{padding:2rem 1.5rem}
+      .gee-section{padding:2rem 1.5rem}
+      .iframe-container iframe{height:60vh!important}
+      .header-content{justify-content:center;flex-direction:column;gap:15px}
+      .logo{flex-direction:column;text-align:center}
+      .logo img{height:40px}
+      .section-title{font-size:2rem;padding-left:40px}
+      .section-title::before{font-size:1.5rem}
+      .hero h1{font-size:2rem}
+      .hero-subtitle{font-size:1.1rem}
+      .cta-title{font-size:2rem}
+      .cta-text{font-size:1rem}
+    }
+    @media(max-width:480px){
+      .hero{padding:2rem 1rem}
+      .section{padding:1.5rem 1rem}
+      .gee-section{padding:1.5rem 1rem}
+      .global-grid{grid-template-columns:1fr}
+      .tech-grid{grid-template-columns:1fr}
+      .indices-grid{grid-template-columns:1fr}
+      .features-grid{grid-template-columns:1fr}
+      .impact-list{grid-template-columns:1fr}
+      .hero h1{font-size:1.8rem}
+      .section-title{font-size:1.8rem}
+      .cta-title{font-size:1.8rem}
+    }
+  </style>
 </head>
-<body class="bg-bg-dark text-text-light font-inter">
-    <!-- Skip to main content link for keyboard navigation -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-accent-blue text-white px-4 py-2 rounded-md z-50 transition-all duration-300">
-        Saltar al contenido principal
-    </a>
-    
-    <!-- Screen reader announcements -->
-    <div id="sr-announcements" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-    
-    <!-- Navigation Component -->
-    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-50 border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex-shrink-0">
-                    <a href="#hero" class="text-2xl font-bold font-poppins text-white hover:text-accent-blue transition-colors duration-300">
-                        QAPY
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#servicios" class="text-gray-300 hover:text-accent-blue px-3 py-2 text-sm font-medium transition-colors duration-300">
-                            Servicios
-                        </a>
-                        <a href="#nosotros" class="text-gray-300 hover:text-accent-blue px-3 py-2 text-sm font-medium transition-colors duration-300">
-                            Nosotros
-                        </a>
-                        <a href="#proceso" class="text-gray-300 hover:text-accent-blue px-3 py-2 text-sm font-medium transition-colors duration-300">
-                            Proceso
-                        </a>
-                        <a href="#casos" class="text-gray-300 hover:text-accent-blue px-3 py-2 text-sm font-medium transition-colors duration-300">
-                            Casos
-                        </a>
-                        <a href="#contacto" class="text-gray-300 hover:text-accent-blue px-3 py-2 text-sm font-medium transition-colors duration-300">
-                            Contacto
-                        </a>
-                        <a href="#contacto" class="btn-primary ml-4">
-                            Agenda una demo
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button type="button" id="mobile-menu-button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent-blue transition-colors duration-300" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Abrir menú principal</span>
-                        <!-- Hamburger icon -->
-                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" role="img" aria-label="Abrir menú">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <!-- Close icon (hidden by default) -->
-                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" role="img" aria-label="Cerrar menú">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <img src="qapy_capybara_logo_vector_1024 (1).png" alt="Qapy Logo" />
+          <span class="logo-text" data-i18n="brand">BloomWatch Global</span>
         </div>
-        
-        <!-- Mobile menu (hidden by default) -->
-        <div class="md:hidden hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-900/98 backdrop-blur-sm border-t border-gray-800">
-                <a href="#servicios" class="text-gray-300 hover:text-accent-blue block px-3 py-2 text-base font-medium transition-colors duration-300">
-                    Servicios
-                </a>
-                <a href="#nosotros" class="text-gray-300 hover:text-accent-blue block px-3 py-2 text-base font-medium transition-colors duration-300">
-                    Nosotros
-                </a>
-                <a href="#proceso" class="text-gray-300 hover:text-accent-blue block px-3 py-2 text-base font-medium transition-colors duration-300">
-                    Proceso
-                </a>
-                <a href="#casos" class="text-gray-300 hover:text-accent-blue block px-3 py-2 text-base font-medium transition-colors duration-300">
-                    Casos
-                </a>
-                <a href="#contacto" class="text-gray-300 hover:text-accent-blue block px-3 py-2 text-base font-medium transition-colors duration-300">
-                    Contacto
-                </a>
-                <div class="px-3 py-2">
-                    <a href="#contacto" class="btn-primary block text-center">
-                        Agenda una demo
-                    </a>
-                </div>
-            </div>
+        <div class="lang-toggle" aria-label="Language switch">
+          <button class="lang-btn active" data-lang="es">ES</button>
+          <button class="lang-btn" data-lang="en">EN</button>
         </div>
-    </nav>
-    
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden" role="banner" aria-label="Sección principal de presentación de QAPY">
-        <!-- Gradient Background with Particle Effects -->
-        <div class="absolute inset-0 bg-gradient-to-br from-bg-dark via-gray-900 to-bg-dark">
-            <!-- CSS-only particle effects -->
-            <div class="particles-container absolute inset-0">
-                <div class="particle particle-1"></div>
-                <div class="particle particle-2"></div>
-                <div class="particle particle-3"></div>
-                <div class="particle particle-4"></div>
-                <div class="particle particle-5"></div>
-                <div class="particle particle-6"></div>
-                <div class="particle particle-7"></div>
-                <div class="particle particle-8"></div>
-            </div>
-            <!-- Gradient overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-bg-dark/50 via-transparent to-bg-dark/30"></div>
-        </div>
-        
-        <!-- Hero Content -->
-        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <!-- QAPY Wordmark -->
-            <div class="mb-6">
-                <h1 class="text-hero font-bold font-poppins mb-4">
-                    <span class="gradient-text">QAPY</span>
-                </h1>
-                <!-- Tagline with gradient effect -->
-                <p class="text-xl sm:text-2xl font-medium text-gray-300 mb-2">
-                    <span class="gradient-text">Innovación argentina</span> en
-                </p>
-                <p class="text-xl sm:text-2xl font-medium text-gray-300 mb-8">
-                    Tecnología, IA y Media
-                </p>
-            </div>
-            
-            <!-- Micro-pitch -->
-            <div class="mb-12 max-w-2xl mx-auto">
-                <p class="text-lg sm:text-xl text-gray-300 leading-relaxed">
-                    Somos una consultora tecnológica que combina <strong class="text-accent-blue">desarrollo de software</strong>, 
-                    <strong class="text-accent-violet">inteligencia artificial</strong> y 
-                    <strong class="text-accent-teal">creatividad digital</strong> para transformar ideas en soluciones reales.
-                </p>
-            </div>
-            
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <!-- Primary CTA -->
-                <a href="#contacto" class="btn-primary text-lg px-8 py-4 inline-flex items-center group" aria-label="Agenda una demo gratuita de 20 minutos">
-                    <span>Agenda una demo</span>
-                    <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Flecha hacia la derecha">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
-                
-                <!-- Secondary CTA -->
-                <a href="https://wa.me/5491123456789?text=Hola!%20Me%20interesa%20conocer%20más%20sobre%20los%20servicios%20de%20QAPY.%20¿Podemos%20agendar%20una%20demo?" 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
-                   class="btn-secondary text-lg px-8 py-4 inline-flex items-center group"
-                   aria-label="Contactar por WhatsApp - Se abre en nueva ventana">
-                    <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Logo de WhatsApp">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
-                    </svg>
-                    <span>WhatsApp</span>
-                </a>
-            </div>
-            
-            <!-- Scroll indicator -->
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <a href="#servicios" class="text-gray-400 hover:text-accent-blue transition-colors duration-300" aria-label="Desplazarse hacia abajo para ver los servicios">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Flecha hacia abajo">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
-                </a>
-            </div>
-        </div>
+        <div class="nasa-badge">NASA Space Apps 2025</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Space Apps Banner -->
+  <div class="container">
+    <div class="space-apps-banner">
+      <img src="Space Apps Logo on blue.png" alt="NASA Space Apps Challenge" />
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="container">
+    <section class="hero">
+      <h1 data-i18n="hero_title">BloomWatch: <span class="gradient">Detección de floraciones desde el espacio</span> 🚀</h1>
+      <p class="hero-subtitle" data-i18n="hero_sub">
+        Monitoreo satelital de floraciones con datos NASA/ESA · actualización reciente (30/90 días)
+      </p>
     </section>
-    
-        <!-- Services Section -->
-        <section id="servicios" class="py-24 bg-gray-900" aria-label="Nuestros servicios tecnológicos">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="text-center mb-16">
-                <h2 class="text-section font-bold font-poppins mb-4">
-                    <span class="gradient-text">Nuestros Servicios</span>
-                </h2>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-                    Transformamos ideas en soluciones tecnológicas con nuestras 17 prácticas especializadas
-                </p>
-            </div>
-            
-            <!-- Services Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-grid" role="region" aria-label="Lista de servicios tecnológicos">
-                <!-- Service cards will be populated by JavaScript -->
-            </div>
+  </div>
+
+  <!-- Global Coverage -->
+  <div class="container">
+    <section class="section">
+      <h2 class="section-title" data-i18n="cov_title">Cobertura Global de Monitoreo</h2>
+      <p style="margin-bottom:1rem" data-i18n="cov_text">
+        Nuestro sistema monitorea floraciones espectaculares en diversos biomas. Con múltiples satélites y análisis espectral, detectamos y cuantificamos eventos con precisión.
+      </p>
+      <div class="global-grid">
+        <div class="location-card">
+          <div class="flag">🇦🇺</div>
+          <h4>Western Australia</h4>
+          <p>Mid West Region</p>
+          <small style="color:var(--primary-green);font-weight:700" data-i18n="recommended">⭐ Recomendado</small>
         </div>
+        <div class="location-card"><div class="flag">🇿🇦</div><h4>Namaqualand</h4><p>South Africa</p></div>
+        <div class="location-card"><div class="flag">🇺🇸</div><h4>Carrizo Plain</h4><p>California</p></div>
+        <div class="location-card"><div class="flag">🇪🇸</div><h4>Castilla-La Mancha</h4><p>España</p></div>
+        <div class="location-card"><div class="flag">🇯🇵</div><h4>Hokkaido</h4><p>Japan</p></div>
+        <div class="location-card"><div class="flag">🇦🇷</div><h4>Región Pampeana</h4><p>Argentina</p></div>
+      </div>
+      <p style="margin-top:1rem;padding:1rem;background:linear-gradient(135deg,rgba(22,163,74,.1),rgba(255,255,255,.9));border-radius:10px;border-left:4px solid var(--primary-green);" data-i18n="cov_note">
+        💡 Flexibilidad total: la App permite dibujar AOIs personalizados (rectángulo/polígono).
+      </p>
     </section>
-    
-        <!-- About Section -->
-        <section id="nosotros" class="py-24 bg-bg-dark" aria-label="Información sobre QAPY y nuestros valores">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="text-center mb-16">
-                <h2 class="text-section font-bold font-poppins mb-6">
-                    <span class="gradient-text">Quiénes Somos</span>
-                </h2>
-                <div class="max-w-4xl mx-auto">
-                    <p class="text-xl text-gray-300 leading-relaxed mb-8">
-                        Somos <strong class="text-accent-blue">QAPY</strong>, una consultora tecnológica argentina que nació para cerrar la brecha entre la innovación global y las necesidades locales. Combinamos expertise técnico de clase mundial con el entendimiento profundo del mercado argentino.
-                    </p>
-                    <p class="text-lg text-gray-400 leading-relaxed">
-                        Nuestro equipo multidisciplinario desarrolla desde arquitecturas de software robustas hasta la primera LLM argentina, pasando por soluciones creativas que transforman la manera en que las empresas se comunican con sus audiencias.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Key Differentiators -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Agilidad -->
-                <div class="text-center group">
-                    <div class="w-16 h-16 bg-accent-blue/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-accent-blue/30 transition-colors duration-300">
-                        <svg class="w-8 h-8 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Icono de rayo representando agilidad">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-card font-semibold font-poppins text-white mb-4">Agilidad</h3>
-                    <p class="text-gray-300 leading-relaxed">
-                        Metodologías ágiles que nos permiten adaptarnos rápidamente a los cambios del mercado y entregar valor desde el primer sprint.
-                    </p>
-                </div>
-                
-                <!-- Equipos -->
-                <div class="text-center group">
-                    <div class="w-16 h-16 bg-accent-violet/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-accent-violet/30 transition-colors duration-300">
-                        <svg class="w-8 h-8 text-accent-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Icono de personas representando equipos de trabajo">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-card font-semibold font-poppins text-white mb-4">Equipos</h3>
-                    <p class="text-gray-300 leading-relaxed">
-                        Profesionales senior con experiencia internacional que trabajan de manera colaborativa y transparente con nuestros clientes.
-                    </p>
-                </div>
-                
-                <!-- Seguridad -->
-                <div class="text-center group">
-                    <div class="w-16 h-16 bg-accent-teal/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-accent-teal/30 transition-colors duration-300">
-                        <svg class="w-8 h-8 text-accent-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Icono de escudo con check representando seguridad">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-card font-semibold font-poppins text-white mb-4">Seguridad</h3>
-                    <p class="text-gray-300 leading-relaxed">
-                        Implementamos las mejores prácticas de seguridad desde el diseño, protegiendo datos y sistemas con estándares internacionales.
-                    </p>
-                </div>
-                
-                <!-- Cultura -->
-                <div class="text-center group">
-                    <div class="w-16 h-16 bg-gradient-to-br from-accent-blue to-accent-violet rounded-full flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-accent-blue/30 transition-all duration-300">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Icono de corazón representando cultura empresarial">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-card font-semibold font-poppins text-white mb-4">Cultura</h3>
-                    <p class="text-gray-300 leading-relaxed">
-                        Fomentamos una cultura de innovación continua, aprendizaje y colaboración que se refleja en cada proyecto que desarrollamos.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Call to Action -->
-            <div class="text-center mt-16">
-                <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                    ¿Querés conocer más sobre cómo trabajamos y qué podemos hacer por tu proyecto?
-                </p>
-                <a href="#contacto" class="btn-primary text-lg px-8 py-4 inline-flex items-center group">
-                    <span>Conversemos</span>
-                    <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
-            </div>
+  </div>
+
+  <!-- Technical -->
+  <div class="container">
+    <section class="section">
+      <h2 class="section-title" data-i18n="tech_title">Tecnología de Detección Avanzada</h2>
+      <p style="margin-bottom:1rem" data-i18n="tech_text">
+        Integramos datos HLSS30/Sentinel-2 y técnicas de unmixing para floraciones con precisión.
+      </p>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3><span data-i18n="data_sources">Fuentes de Datos</span></h3>
+          <p><strong>HLS v2 (HLSS30, 30m)</strong> · <span data-i18n="hls_line">armonizado Landsat–Sentinel</span></p>
+          <p><strong>Sentinel-2 SR (10m)</strong> · <span data-i18n="s2_line">corrección atmosférica</span></p>
+          <p data-i18n="fallback">Fallback automático entre sensores</p>
         </div>
+        <div class="tech-card">
+          <h3><span data-i18n="unmix_title">Unmixing Espectral</span></h3>
+          <p data-i18n="unmix_list">6 endmembers: flores (amarillas/rojas/violetas), hojas, suelo, sombra.</p>
+        </div>
+        <div class="tech-card">
+          <h3><span data-i18n="series_title">Series Temporales</span></h3>
+          <p data-i18n="series_text1">Agregación mensual (medianas robustas) para nubes/outliers.</p>
+          <p data-i18n="series_text2">Fenogramas, picos de floración y tendencias.</p>
+        </div>
+      </div>
     </section>
-    
-    <!-- Process Section -->
-    <section id="proceso" class="py-24 bg-gray-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="text-center mb-16">
-                <h2 class="text-section font-bold font-poppins mb-6">
-                    <span class="gradient-text">Cómo Trabajamos</span>
-                </h2>
-                <div class="max-w-4xl mx-auto">
-                    <p class="text-xl text-gray-300 leading-relaxed mb-8">
-                        Nuestra metodología combina las mejores prácticas de desarrollo ágil con un enfoque centrado en resultados. 
-                        Trabajamos en sprints cortos, con entregas incrementales y feedback continuo para asegurar que cada proyecto 
-                        cumpla con los más altos estándares de calidad.
-                    </p>
-                    <p class="text-lg text-gray-400 leading-relaxed">
-                        Desde la concepción hasta la implementación, cada etapa está diseñada para maximizar el valor entregado 
-                        mientras minimizamos riesgos y tiempos de desarrollo.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Process Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Velocidad Card -->
-                <div class="bg-gray-800 rounded-xl p-8 hover:bg-gray-700 hover:border-accent-blue hover:border-2 transition-all duration-300 hover:shadow-lg hover:shadow-accent-blue/20 group">
-                    <div class="w-16 h-16 bg-accent-blue/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-blue/30 transition-colors duration-300">
-                        <svg class="w-8 h-8 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-card font-semibold font-poppins text-white mb-4">Velocidad</h3>
-                    <p class="text-gray-300 leading-relaxed mb-6">
-                        Implementamos metodologías ágiles con sprints de 2 semanas, entregas continuas y automatización de procesos. 
-                        Nuestro enfoque DevOps acelera el time-to-market sin comprometer la calidad.
-                    </p>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-blue mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Sprints de 2 semanas con entregas incrementales
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-blue mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            CI/CD automatizado para deployment continuo
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-blue mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Feedback loops cortos con stakeholders
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Calidad Card -->
-                <div class="bg-gray-800 rounded-xl p-8 hover:bg-gray-700 hover:border-accent-violet hover:border-2 transition-all duration-300 hover:shadow-lg hover:shadow-accent-violet/20 group">
-                    <div class="w-16 h-16 bg-accent-violet/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-violet/30 transition-colors duration-300">
-                        <svg class="w-8 h-8 text-accent-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-card font-semibold font-poppins text-white mb-4">Calidad</h3>
-                    <p class="text-gray-300 leading-relaxed mb-6">
-                        Aplicamos TDD, code reviews rigurosos y testing automatizado en cada etapa. 
-                        Nuestros estándares de calidad aseguran código mantenible, escalable y robusto.
-                    </p>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-violet mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Test-Driven Development (TDD)
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-violet mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Code reviews y pair programming
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-violet mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Cobertura de testing +90%
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Seguridad Card -->
-                <div class="bg-gray-800 rounded-xl p-8 hover:bg-gray-700 hover:border-accent-teal hover:border-2 transition-all duration-300 hover:shadow-lg hover:shadow-accent-teal/20 group">
-                    <div class="w-16 h-16 bg-accent-teal/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-teal/30 transition-colors duration-300">
-                        <svg class="w-8 h-8 text-accent-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-card font-semibold font-poppins text-white mb-4">Seguridad</h3>
-                    <p class="text-gray-300 leading-relaxed mb-6">
-                        Implementamos security-by-design con auditorías continuas, encriptación end-to-end y compliance con estándares internacionales. 
-                        La seguridad es parte integral de nuestro proceso de desarrollo.
-                    </p>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-teal mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Security-by-design desde el día 1
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-teal mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Auditorías de seguridad automatizadas
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-4 h-4 text-accent-teal mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Compliance GDPR, SOC2, ISO 27001
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Process Flow -->
-            <div class="mt-16 text-center">
-                <h3 class="text-xl font-semibold font-poppins text-white mb-8">Nuestro Proceso de Trabajo</h3>
-                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
-                    <!-- Step 1 -->
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-accent-blue rounded-full flex items-center justify-center text-white font-bold">1</div>
-                        <div class="ml-4 text-left">
-                            <h4 class="font-semibold text-white">Discovery</h4>
-                            <p class="text-sm text-gray-400">Análisis y planificación</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Arrow -->
-                    <div class="hidden md:block">
-                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </div>
-                    
-                    <!-- Step 2 -->
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-accent-violet rounded-full flex items-center justify-center text-white font-bold">2</div>
-                        <div class="ml-4 text-left">
-                            <h4 class="font-semibold text-white">Development</h4>
-                            <p class="text-sm text-gray-400">Desarrollo iterativo</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Arrow -->
-                    <div class="hidden md:block">
-                        <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </div>
-                    
-                    <!-- Step 3 -->
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-accent-teal rounded-full flex items-center justify-center text-white font-bold">3</div>
-                        <div class="ml-4 text-left">
-                            <h4 class="font-semibold text-white">Delivery</h4>
-                            <p class="text-sm text-gray-400">Deploy y soporte</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Call to Action -->
-            <div class="text-center mt-16">
-                <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                    ¿Te interesa conocer más detalles sobre nuestra metodología de trabajo?
-                </p>
-                <a href="#contacto" class="btn-primary text-lg px-8 py-4 inline-flex items-center group">
-                    <span>Agenda una demo gratuita</span>
-                    <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
-            </div>
+  </div>
+
+  <!-- Indices -->
+  <div class="container">
+    <section class="section">
+      <h2 class="section-title" data-i18n="idx_title">Índices Espectrales</h2>
+      <div class="indices-grid">
+        <div class="index-box">
+          <h4>MRBI</h4>
+          <p data-i18n="mrbi_desc">Índice de floración (Red-Edge vs Green) + residual de unmixing</p>
         </div>
+        <div class="index-box"><h4>NDVI-RE</h4><p data-i18n="ndvire_desc">Índice de verdor (Red-Edge)</p></div>
+        <div class="index-box"><h4>NDYI</h4><p data-i18n="ndyi_desc">Yellowness (Green vs Blue)</p></div>
+        <div class="index-box"><h4>CRI</h4><p data-i18n="cri_desc">Carotenoid Reflectance Index</p></div>
+        <div class="index-box"><h4>Bloom Probability</h4><p data-i18n="prob_desc">Probabilidad (0–100%) y score (0–1)</p></div>
+        <div class="index-box"><h4>Flower Fraction</h4><p data-i18n="ff_desc">% del píxel con flores</p></div>
+      </div>
     </section>
-    
-    <!-- Case Studies Section -->
-    <section id="casos" class="py-24 bg-bg-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="text-center mb-16">
-                <h2 class="text-section font-bold font-poppins mb-6">
-                    <span class="gradient-text">Casos de Estudio</span>
-                </h2>
-                <div class="max-w-4xl mx-auto">
-                    <p class="text-xl text-gray-300 leading-relaxed mb-8">
-                        Conocé algunos de nuestros proyectos más destacados y cómo hemos ayudado a empresas argentinas 
-                        a transformar sus operaciones con tecnología de vanguardia.
-                    </p>
-                    <p class="text-lg text-gray-400 leading-relaxed">
-                        Desde migraciones cloud hasta el desarrollo de la primera LLM argentina, 
-                        cada proyecto refleja nuestro compromiso con la innovación y la excelencia técnica.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Case Studies Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Tech Case Study -->
-                <div class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 hover:border-accent-blue hover:border-2 transition-all duration-300 hover:shadow-lg hover:shadow-accent-blue/20 group">
-                    <!-- Optimized Image with WebP and lazy loading -->
-                    <div class="relative h-48 overflow-hidden">
-                        <picture>
-                            <source 
-                                data-srcset="/assets/case-tech.webp 400w, /assets/case-tech.webp 800w" 
-                                type="image/webp"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            >
-                            <img 
-                                data-src="/assets/case-tech.jpg" 
-                                data-srcset="/assets/case-tech.jpg 400w, /assets/case-tech.jpg 800w"
-                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='192'%3E%3Crect width='100%25' height='100%25' fill='%23374151'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%239CA3AF' font-family='system-ui' font-size='14'%3ECargando...%3C/text%3E%3C/svg%3E"
-                                alt="Dashboard de monitoreo en tiempo real para migración cloud enterprise"
-                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 lazy-loading"
-                                loading="lazy"
-                                width="400"
-                                height="192"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            >
-                        </picture>
-                        <!-- Gradient overlay for better text readability -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-                        <!-- Category Badge -->
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-accent-blue/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                Tech
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <!-- Content -->
-                    <div class="p-6">
-                        <h3 class="text-card font-semibold font-poppins text-white mb-3 group-hover:text-accent-blue transition-colors duration-300">
-                            Migración Cloud Enterprise
-                        </h3>
-                        <p class="text-gray-300 mb-4 leading-relaxed">
-                            Migración completa de infraestructura legacy a AWS con dashboard de monitoreo en tiempo real. 
-                            Reducción del 60% en costos operativos y mejora del 300% en performance.
-                        </p>
-                        
-                        <!-- Tags -->
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Cloud</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Dashboard</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Monitoring</span>
-                        </div>
-                        
-                        <!-- CTA -->
-                        <button class="text-accent-blue hover:text-accent-violet transition-colors duration-300 font-medium inline-flex items-center group/cta">
-                            <span>Ver caso completo</span>
-                            <svg class="ml-2 w-4 h-4 group-hover/cta:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- AI Case Study -->
-                <div class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 hover:border-accent-violet hover:border-2 transition-all duration-300 hover:shadow-lg hover:shadow-accent-violet/20 group">
-                    <!-- Optimized Image with WebP and lazy loading -->
-                    <div class="relative h-48 overflow-hidden">
-                        <picture>
-                            <source 
-                                data-srcset="/assets/case-ai.webp 400w, /assets/case-ai.webp 800w" 
-                                type="image/webp"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            >
-                            <img 
-                                data-src="/assets/case-ai.jpg" 
-                                data-srcset="/assets/case-ai.jpg 400w, /assets/case-ai.jpg 800w"
-                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='192'%3E%3Crect width='100%25' height='100%25' fill='%23374151'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%239CA3AF' font-family='system-ui' font-size='14'%3ECargando...%3C/text%3E%3C/svg%3E"
-                                alt="QAPY Mini-LLM Beta - Primera LLM argentina descargable"
-                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 lazy-loading"
-                                loading="lazy"
-                                width="400"
-                                height="192"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            >
-                        </picture>
-                        <!-- Gradient overlay for better text readability -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-                        <!-- Category Badge -->
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-accent-violet/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                AI
-                            </span>
-                        </div>
-                        <!-- Special Badge -->
-                        <div class="absolute top-4 right-4">
-                            <span class="bg-gradient-to-r from-accent-violet to-accent-blue text-white px-2 py-1 rounded-full text-xs font-bold">
-                                BETA
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <!-- Content -->
-                    <div class="p-6">
-                        <h3 class="text-card font-semibold font-poppins text-white mb-3 group-hover:text-accent-violet transition-colors duration-300">
-                            QAPY Mini-LLM Beta
-                        </h3>
-                        <p class="text-gray-300 mb-4 leading-relaxed">
-                            Primera LLM argentina optimizada para el contexto local. Modelo compacto de 7B parámetros 
-                            entrenado con datos argentinos, disponible para descarga gratuita.
-                        </p>
-                        
-                        <!-- Tags -->
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">AI</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">LLM</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Argentina</span>
-                        </div>
-                        
-                        <!-- Download CTA -->
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <button class="text-accent-violet hover:text-accent-blue transition-colors duration-300 font-medium inline-flex items-center group/cta">
-                                <span>Descargar Beta</span>
-                                <svg class="ml-2 w-4 h-4 group-hover/cta:translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-4-4m4 4l4-4m-6 8h8a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                            </button>
-                            <button class="text-gray-400 hover:text-accent-violet transition-colors duration-300 text-sm inline-flex items-center">
-                                <span>Ver documentación</span>
-                                <svg class="ml-1 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Media Case Study -->
-                <div class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 hover:border-accent-teal hover:border-2 transition-all duration-300 hover:shadow-lg hover:shadow-accent-teal/20 group">
-                    <!-- Optimized Image with WebP and lazy loading -->
-                    <div class="relative h-48 overflow-hidden">
-                        <picture>
-                            <source 
-                                data-srcset="/assets/case-media.webp 400w, /assets/case-media.webp 800w" 
-                                type="image/webp"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            >
-                            <img 
-                                data-src="/assets/case-media.jpg" 
-                                data-srcset="/assets/case-media.jpg 400w, /assets/case-media.jpg 800w"
-                                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='192'%3E%3Crect width='100%25' height='100%25' fill='%23374151'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%239CA3AF' font-family='system-ui' font-size='14'%3ECargando...%3C/text%3E%3C/svg%3E"
-                                alt="Spot publicitario de 20 segundos generado con inteligencia artificial"
-                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 lazy-loading"
-                                loading="lazy"
-                                width="400"
-                                height="192"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            >
-                        </picture>
-                        <!-- Gradient overlay for better text readability -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20"></div>
-                        <!-- Play button overlay -->
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 transition-colors duration-300">
-                                <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="M8 5v14l11-7z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <!-- Category Badge -->
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-accent-teal/90 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                Media
-                            </span>
-                        </div>
-                        <!-- Duration Badge -->
-                        <div class="absolute bottom-4 right-4">
-                            <span class="bg-black/60 text-white px-2 py-1 rounded text-xs font-medium">
-                                0:20
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <!-- Content -->
-                    <div class="p-6">
-                        <h3 class="text-card font-semibold font-poppins text-white mb-3 group-hover:text-accent-teal transition-colors duration-300">
-                            Spot Publicitario con IA
-                        </h3>
-                        <p class="text-gray-300 mb-4 leading-relaxed">
-                            Producción audiovisual de 20 segundos generada completamente con IA. Desde el guión hasta la 
-                            post-producción, demostrando el potencial creativo de la inteligencia artificial.
-                        </p>
-                        
-                        <!-- Tags -->
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">IA Creativa</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Video</span>
-                            <span class="bg-gray-700 text-gray-300 px-2 py-1 rounded text-xs">Automatización</span>
-                        </div>
-                        
-                        <!-- CTA -->
-                        <button class="text-accent-teal hover:text-accent-violet transition-colors duration-300 font-medium inline-flex items-center group/cta">
-                            <span>Ver video completo</span>
-                            <svg class="ml-2 w-4 h-4 group-hover/cta:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h8m-9-4V8a2 2 0 012-2h8a2 2 0 012 2v2M9 18h6"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Call to Action -->
-            <div class="text-center mt-16">
-                <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                    ¿Tenés un proyecto en mente? Conversemos sobre cómo podemos ayudarte a hacerlo realidad.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="#contacto" class="btn-primary text-lg px-8 py-4 inline-flex items-center group">
-                        <span>Agenda una demo</span>
-                        <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </a>
-                    <a href="https://wa.me/5491123456789?text=Hola!%20Me%20interesa%20conocer%20más%20sobre%20los%20casos%20de%20estudio%20de%20QAPY.%20¿Podemos%20conversar?" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="btn-secondary text-lg px-8 py-4 inline-flex items-center group">
-                        <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
-                        </svg>
-                        <span>Conversemos</span>
-                    </a>
-                </div>
-            </div>
+  </div>
+
+  <!-- GEE App -->
+  <div class="container">
+    <section class="gee-section">
+      <h2 class="gee-title" data-i18n="gee_title">Google Earth Engine – Plataforma Interactiva</h2>
+      <p style="text-align:center;margin-bottom:1rem" data-i18n="gee_text">
+        Procesamiento en la nube con HLSS30→S2, MRBI, unmixing y detección mensual de floraciones.
+      </p>
+      <div class="features-grid">
+        <div class="feature-item"><h4 data-i18n="feat_map">Mapa híbrido con capas de índices</h4></div>
+        <div class="feature-item"><h4 data-i18n="feat_time">Selector temporal y presets</h4></div>
+        <div class="feature-item"><h4 data-i18n="feat_aoi">Dibujo de AOI</h4></div>
+        <div class="feature-item"><h4 data-i18n="feat_charts">Gráficos y fenogramas</h4></div>
+        <div class="feature-item"><h4 data-i18n="feat_thresholds">Umbrales ajustables</h4></div>
+        <div class="feature-item"><h4 data-i18n="feat_autorun">Auto-ejecución</h4></div>
+      </div>
+
+      <div class="iframe-container">
+        <iframe
+          src="https://ainabi-dev.projects.earthengine.app/view/bloomwatch--demo"
+          style="width:100%;height:700px;border:0;border-radius:10px"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          allow="geolocation 'self'; fullscreen *">
+        </iframe>
+        <p style="text-align:center;font-size:.9rem;opacity:.8;margin-top:8px" data-i18n="iframe_caption">
+          Fuente: Google Earth Engine App (HLSS30 / Sentinel-2, composites mensuales)
+        </p>
+      </div>
+
+      <!-- MRBI Legend -->
+      <div style="display:flex;justify-content:center;margin-top:1rem">
+        <div class="mrbi-legend">
+          <h4 style="color:var(--dark-blue)" data-i18n="legend_title">Escala MRBI</h4>
+          <div class="legend-items">
+            <div class="legend-item"><div class="legend-color" style="background:blue"></div><span>-0.2</span></div>
+            <div class="legend-item"><div class="legend-color" style="background:white;border:1px solid #ccc"></div><span>0.0</span></div>
+            <div class="legend-item"><div class="legend-color" style="background:yellow"></div><span>0.2</span></div>
+            <div class="legend-item"><div class="legend-color" style="background:orange"></div><span>0.4</span></div>
+            <div class="legend-item"><div class="legend-color" style="background:red"></div><span>0.6+</span></div>
+          </div>
+          <p style="font-size:.9rem;margin-top:.4rem;color:#334155" data-i18n="legend_note">
+            Valores &gt; 0.30 indican alta probabilidad de floración.
+          </p>
         </div>
+      </div>
     </section>
-    
-    <!-- Contact Section -->
-    <section id="contacto" class="py-24 bg-gray-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="text-center mb-16">
-                <h2 class="text-section font-bold font-poppins mb-6">
-                    <span class="gradient-text">Contacto</span>
-                </h2>
-                <div class="max-w-3xl mx-auto">
-                    <p class="text-xl text-gray-300 leading-relaxed mb-8">
-                        ¿Tenés un proyecto en mente? Conversemos sobre cómo podemos ayudarte a transformar tus ideas en soluciones reales.
-                    </p>
-                    <p class="text-lg text-gray-400 leading-relaxed">
-                        Agenda una demo gratuita de 20 minutos o escribinos por WhatsApp para una respuesta inmediata.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                <!-- Contact Form -->
-                <div class="bg-gray-800 rounded-xl p-8 hover:bg-gray-700 transition-colors duration-300">
-                    <div class="mb-8">
-                        <h3 class="text-card font-semibold font-poppins text-white mb-4">
-                            Agenda una demo gratuita
-                        </h3>
-                        <p class="text-gray-300">
-                            Completá el formulario y te contactamos en menos de 24 horas para coordinar una demo personalizada.
-                        </p>
-                    </div>
-                    
-                    <!-- Netlify Form -->
-                    <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="space-y-6" id="contact-form" role="form" aria-label="Formulario de contacto para agendar demo" novalidate>
-                        <!-- Hidden fields for Netlify -->
-                        <input type="hidden" name="form-name" value="contact" />
-                        <div class="hidden">
-                            <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" aria-hidden="true" /></label>
-                        </div>
-                        
-                        <!-- Name Field -->
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">
-                                Nombre completo *
-                            </label>
-                            <input 
-                                type="text" 
-                                id="name" 
-                                name="name" 
-                                required 
-                                aria-required="true"
-                                aria-describedby="name-error"
-                                aria-invalid="false"
-                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-colors duration-300"
-                                placeholder="Tu nombre y apellido"
-                                autocomplete="name"
-                            />
-                            <div class="error-message hidden text-red-400 text-sm mt-1" id="name-error" role="alert" aria-live="polite"></div>
-                        </div>
-                        
-                        <!-- Email Field -->
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
-                                Email *
-                            </label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
-                                required 
-                                aria-required="true"
-                                aria-describedby="email-error"
-                                aria-invalid="false"
-                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-colors duration-300"
-                                placeholder="tu@email.com"
-                                autocomplete="email"
-                            />
-                            <div class="error-message hidden text-red-400 text-sm mt-1" id="email-error" role="alert" aria-live="polite"></div>
-                        </div>
-                        
-                        <!-- Company Field -->
-                        <div>
-                            <label for="company" class="block text-sm font-medium text-gray-300 mb-2">
-                                Empresa
-                            </label>
-                            <input 
-                                type="text" 
-                                id="company" 
-                                name="company" 
-                                aria-invalid="false"
-                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-colors duration-300"
-                                placeholder="Nombre de tu empresa (opcional)"
-                                autocomplete="organization"
-                            />
-                        </div>
-                        
-                        <!-- Message Field -->
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-300 mb-2">
-                                Mensaje *
-                            </label>
-                            <textarea 
-                                id="message" 
-                                name="message" 
-                                rows="5" 
-                                required 
-                                aria-required="true"
-                                aria-describedby="message-error"
-                                aria-invalid="false"
-                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition-colors duration-300 resize-vertical"
-                                placeholder="Contanos sobre tu proyecto, qué servicios te interesan y cuándo te gustaría empezar..."
-                            ></textarea>
-                            <div class="error-message hidden text-red-400 text-sm mt-1" id="message-error" role="alert" aria-live="polite"></div>
-                        </div>
-                        
-                        <!-- Submit Button -->
-                        <div>
-                            <button 
-                                type="submit" 
-                                class="w-full btn-primary text-lg px-8 py-4 inline-flex items-center justify-center group disabled:opacity-50 disabled:cursor-not-allowed"
-                                id="submit-btn"
-                                aria-describedby="form-messages"
-                                aria-label="Enviar formulario de contacto"
-                            >
-                                <span id="submit-text">Enviar mensaje</span>
-                                <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="submit-icon" aria-hidden="true" role="img" aria-label="Icono de envío">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-                                </svg>
-                                <!-- Loading spinner (hidden by default) -->
-                                <svg class="ml-2 w-5 h-5 animate-spin hidden" fill="none" viewBox="0 0 24 24" id="loading-spinner" aria-hidden="true" role="img" aria-label="Cargando">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                            </button>
-                        </div>
-                        
-                        <!-- Success/Error Messages -->
-                        <div id="form-messages" class="hidden" role="status" aria-live="polite" aria-atomic="true">
-                            <div id="success-message" class="hidden bg-green-900/50 border border-green-500 text-green-300 px-4 py-3 rounded-lg" role="alert">
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Éxito">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span>¡Mensaje enviado exitosamente! Te contactaremos pronto.</span>
-                                </div>
-                            </div>
-                            <div id="error-message" class="hidden bg-red-900/50 border border-red-500 text-red-300 px-4 py-3 rounded-lg" role="alert">
-                                <div class="flex items-center">
-                                    <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Error">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    <span>Hubo un error al enviar el mensaje. Por favor, intentá nuevamente o contactanos por WhatsApp.</span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- Contact Info & WhatsApp -->
-                <div class="space-y-8">
-                    <!-- WhatsApp CTA -->
-                    <div class="bg-gradient-to-br from-green-600 to-green-700 rounded-xl p-8 text-white">
-                        <div class="flex items-center mb-6">
-                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" role="img" aria-label="Logo de WhatsApp">
-                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold font-poppins">¿Preferís WhatsApp?</h3>
-                                <p class="text-green-100">Respuesta inmediata</p>
-                            </div>
-                        </div>
-                        <p class="text-green-100 mb-6 leading-relaxed">
-                            Escribinos directamente y te respondemos al instante. Ideal para consultas rápidas o para coordinar una llamada.
-                        </p>
-                        <a 
-                            href="https://wa.me/5491123456789?text=Hola!%20Me%20interesa%20conocer%20más%20sobre%20los%20servicios%20de%20QAPY.%20¿Podemos%20agendar%20una%20demo?" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            class="inline-flex items-center bg-white text-green-700 font-semibold px-6 py-3 rounded-lg hover:bg-green-50 transition-colors duration-300 group"
-                        >
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
-                            </svg>
-                            <span>Escribir por WhatsApp</span>
-                            <svg class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-                    
-                    <!-- Contact Information -->
-                    <div class="bg-gray-800 rounded-xl p-8">
-                        <h3 class="text-xl font-semibold font-poppins text-white mb-6">Información de contacto</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center text-gray-300">
-                                <svg class="w-5 h-5 text-accent-blue mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                </svg>
-                                <span>hola@qapy.com.ar</span>
-                            </div>
-                            <div class="flex items-center text-gray-300">
-                                <svg class="w-5 h-5 text-accent-blue mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
-                                <span>Buenos Aires, Argentina</span>
-                            </div>
-                            <div class="flex items-center text-gray-300">
-                                <svg class="w-5 h-5 text-accent-blue mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <span>Lun - Vie: 9:00 - 18:00 ART</span>
-                            </div>
-                        </div>
-                        
-                        <!-- Response Time -->
-                        <div class="mt-6 pt-6 border-t border-gray-700">
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                <span>Tiempo de respuesta promedio: 2-4 horas</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Demo CTA -->
-                    <div class="bg-gradient-to-br from-accent-blue to-accent-violet rounded-xl p-8 text-white">
-                        <h3 class="text-xl font-semibold font-poppins mb-4">Demo gratuita de 20 minutos</h3>
-                        <p class="text-blue-100 mb-6 leading-relaxed">
-                            Te mostramos cómo nuestras soluciones pueden aplicarse específicamente a tu proyecto. Sin compromiso, solo valor.
-                        </p>
-                        <div class="space-y-3 text-sm text-blue-100">
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                <span>Análisis inicial de tu proyecto</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                <span>Recomendaciones personalizadas</span>
-                            </div>
-                            <div class="flex items-center">
-                                <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                <span>Estimación de tiempos y costos</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  </div>
+
+  <!-- Products / Outputs -->
+  <div class="container">
+    <section class="section">
+      <h2 class="section-title" data-i18n="prod_title">Productos y Visualizaciones</h2>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3><span data-i18n="layers_title">Capas del Mapa</span></h3>
+          <ul style="margin-left:20px;margin-top:.5rem">
+            <li data-i18n="layers_rgb"><strong>RGB natural</strong> (true color)</li>
+            <li><strong>MRBI</strong> – <span data-i18n="layers_mrbi">índice de floración</span></li>
+            <li data-i18n="layers_ff"><strong>Fracción de flores</strong></li>
+            <li><strong>NDVI-RE</strong> – <span data-i18n="layers_ndvire">estado de la vegetación</span></li>
+            <li data-i18n="layers_prob"><strong>Probabilidad de bloom</strong> (0–100%)</li>
+          </ul>
         </div>
+        <div class="tech-card">
+          <h3><span data-i18n="stats_title">Estadísticas AOI</span></h3>
+          <ul style="margin-left:20px;margin-top:.5rem">
+            <li data-i18n="stats_items_1">MRBI medio y percentil 90</li>
+            <li data-i18n="stats_items_2">Probabilidad de floración promedio</li>
+            <li data-i18n="stats_items_3">Fracción de flores media</li>
+            <li data-i18n="stats_items_4">Área y % del AOI con floración</li>
+            <li data-i18n="stats_items_5">Alineación con temporada esperada</li>
+            <li data-i18n="stats_items_6">Detección de anomalías (vs. climatología)</li>
+          </ul>
+        </div>
+        <div class="tech-card">
+          <h3><span data-i18n="time_title">Análisis Temporal</span></h3>
+          <ul style="margin-left:20px;margin-top:.5rem">
+            <li data-i18n="time_items_1">Series mensuales multi-índice</li>
+            <li data-i18n="time_items_2">Fenogramas MRBI vs NDVI-RE</li>
+            <li data-i18n="time_items_3">Picos y tendencias de floración</li>
+          </ul>
+        </div>
+      </div>
     </section>
-    
-    <!-- Footer Component -->
-    <footer class="bg-bg-dark border-t border-gray-800 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                <!-- Company Info -->
-                <div class="lg:col-span-2">
-                    <div class="mb-6">
-                        <a href="#hero" class="text-3xl font-bold font-poppins gradient-text hover:opacity-80 transition-opacity duration-300">
-                            QAPY
-                        </a>
-                    </div>
-                    <p class="text-gray-300 leading-relaxed mb-6 max-w-md">
-                        Consultora tecnológica argentina especializada en IA, desarrollo de software y media creativa. 
-                        Transformamos ideas en soluciones reales con innovación y calidad.
-                    </p>
-                    <div class="flex items-center text-sm text-gray-400">
-                        <svg class="w-4 h-4 mr-2 text-accent-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        <span>Buenos Aires, Argentina</span>
-                    </div>
-                </div>
-                
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-semibold font-poppins text-white mb-6">Navegación</h3>
-                    <ul class="space-y-3">
-                        <li>
-                            <a href="#servicios" class="text-gray-300 hover:text-accent-blue transition-colors duration-300 flex items-center group">
-                                <span>Servicios</span>
-                                <svg class="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#nosotros" class="text-gray-300 hover:text-accent-blue transition-colors duration-300 flex items-center group">
-                                <span>Nosotros</span>
-                                <svg class="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#proceso" class="text-gray-300 hover:text-accent-blue transition-colors duration-300 flex items-center group">
-                                <span>Proceso</span>
-                                <svg class="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#casos" class="text-gray-300 hover:text-accent-blue transition-colors duration-300 flex items-center group">
-                                <span>Casos</span>
-                                <svg class="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#contacto" class="text-gray-300 hover:text-accent-blue transition-colors duration-300 flex items-center group">
-                                <span>Contacto</span>
-                                <svg class="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Social Media & Contact -->
-                <div>
-                    <h3 class="text-lg font-semibold font-poppins text-white mb-6">Conectá con nosotros</h3>
-                    <div class="space-y-4 mb-6">
-                        <!-- LinkedIn -->
-                        <a href="https://linkedin.com/company/qapy" 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
-                           class="flex items-center text-gray-300 hover:text-accent-blue transition-colors duration-300 group">
-                            <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center mr-3 group-hover:bg-accent-blue/20 transition-colors duration-300">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                </svg>
-                            </div>
-                            <span>LinkedIn</span>
-                        </a>
-                        
-                        <!-- Instagram -->
-                        <a href="https://instagram.com/qapy.ar" 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
-                           class="flex items-center text-gray-300 hover:text-accent-violet transition-colors duration-300 group">
-                            <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center mr-3 group-hover:bg-accent-violet/20 transition-colors duration-300">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                                </svg>
-                            </div>
-                            <span>Instagram</span>
-                        </a>
-                        
-                        <!-- WhatsApp -->
-                        <a href="https://wa.me/5491123456789?text=Hola!%20Me%20interesa%20conocer%20más%20sobre%20los%20servicios%20de%20QAPY." 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
-                           class="flex items-center text-gray-300 hover:text-accent-teal transition-colors duration-300 group">
-                            <div class="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center mr-3 group-hover:bg-accent-teal/20 transition-colors duration-300">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
-                                </svg>
-                            </div>
-                            <span>WhatsApp</span>
-                        </a>
-                    </div>
-                    
-                    <!-- Quick Contact -->
-                    <div class="space-y-2 text-sm">
-                        <div class="flex items-center text-gray-400">
-                            <svg class="w-4 h-4 mr-2 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                            </svg>
-                            <a href="mailto:contacto@qapy.com.ar" class="hover:text-accent-blue transition-colors duration-300">
-                                contacto@qapy.com.ar
-                            </a>
-                        </div>
-                        <div class="flex items-center text-gray-400">
-                            <svg class="w-4 h-4 mr-2 text-accent-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <span>Respuesta en 24hs</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Bottom Bar -->
-            <div class="border-t border-gray-800 pt-8">
-                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                    <!-- Copyright -->
-                    <div class="text-gray-400 text-sm">
-                        <p>&copy; 2024 QAPY. Todos los derechos reservados.</p>
-                    </div>
-                    
-                    <!-- Legal Links -->
-                    <div class="flex space-x-6 text-sm">
-                        <a href="/privacidad" class="text-gray-400 hover:text-accent-blue transition-colors duration-300">
-                            Política de Privacidad
-                        </a>
-                        <a href="/terminos" class="text-gray-400 hover:text-accent-blue transition-colors duration-300">
-                            Términos de Uso
-                        </a>
-                        <a href="/cookies" class="text-gray-400 hover:text-accent-blue transition-colors duration-300">
-                            Cookies
-                        </a>
-                    </div>
-                    
-                    <!-- Back to Top -->
-                    <div>
-                        <a href="#hero" class="inline-flex items-center text-gray-400 hover:text-accent-blue transition-colors duration-300 group">
-                            <span class="text-sm mr-2">Volver arriba</span>
-                            <svg class="w-4 h-4 group-hover:-translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="container">
+    <section class="cta-section">
+      <h2 class="cta-title" data-i18n="cta_title">¡Unite a la Misión Global!</h2>
+      <p data-i18n="cta_text">Sumate a GLOBE Observer y/o iNaturalist para validar las floraciones observadas desde el espacio.</p>
+      <div>
+        <a href="https://observer.globe.gov/" target="_blank" rel="noopener" class="cta-button" data-i18n="cta_btn_globe">Participar en GLOBE</a>
+        <a href="https://www.inaturalist.org/observations" target="_blank" rel="noopener" class="cta-button" style="background:#2c7fb8" data-i18n="cta_btn_inat">Ver/Reportar en iNaturalist</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Impact -->
+  <div class="container">
+    <section class="section">
+      <h2 class="section-title" data-i18n="impact_title">Impacto del Proyecto</h2>
+      <p data-i18n="impact_intro">BloomWatch conecta ciencia y gestión territorial.</p>
+      <div class="impact-list">
+        <div class="impact-item"><div><h4 data-i18n="imp_agri_t">Agricultura</h4><p data-i18n="imp_agri_d">Optimización de polinización y predicción de rendimientos.</p></div></div>
+        <div class="impact-item"><div><h4 data-i18n="imp_health_t">Salud pública</h4><p data-i18n="imp_health_d">Alertas de polen para alergias estacionales.</p></div></div>
+        <div class="impact-item"><div><h4 data-i18n="imp_poll_t">Polinizadores</h4><p data-i18n="imp_poll_d">Mapeo de recursos florales críticos.</p></div></div>
+        <div class="impact-item"><div><h4 data-i18n="imp_clim_t">Cambio climático</h4><p data-i18n="imp_clim_d">Floraciones como bioindicadores.</p></div></div>
+        <div class="impact-item"><div><h4 data-i18n="imp_inv_t">Invasoras</h4><p data-i18n="imp_inv_d">Detección temprana por patrones de floración.</p></div></div>
+        <div class="impact-item"><div><h4 data-i18n="imp_pest_t">Plagas</h4><p data-i18n="imp_pest_d">Riesgos basados en disponibilidad floral.</p></div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div style="display:flex;align-items:center;gap:15px;margin-bottom:1rem">
+            <img src="768c9991-16d3-4383-8efc-22624499152d.png" alt="Qapy Logo" style="height:40px;filter:drop-shadow(var(--border-glow))" />
+            <h4><span data-i18n="foot_sat_t">Satélites & Sensores</span></h4>
+          </div>
+          <ul>
+            <li>NASA HLS (HLSS30 v002)</li>
+            <li>ESA Sentinel-2 SR Harmonized</li>
+            <li>USGS Landsat 8/9 OLI</li>
+            <li>Google Earth Engine</li>
+          </ul>
         </div>
-    </footer>
-    
-    </main>
-    
-    <!-- Footer -->
-    <footer class="bg-gray-900 border-t border-gray-800 py-8" role="contentinfo">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-gray-400 text-sm">
-                    © 2024 QAPY. Todos los derechos reservados. 
-                    <span class="sr-only">Fin del contenido principal</span>
-                </p>
-            </div>
+        <div class="footer-section">
+          <h4><span data-i18n="foot_collab_t">Colaboradores</span></h4>
+          <ul>
+            <li>NASA Space Apps Challenge</li>
+            <li>GLOBE Observer Program</li>
+            <li>Google Earth Engine Team</li>
+            <li>Research Teams</li>
+          </ul>
         </div>
-    </footer>
-    
-    <!-- Scripts -->
-    <script src="scripts/main.js"></script>
+        <div class="footer-section">
+          <h4><span data-i18n="foot_res_t">Recursos</span></h4>
+          <ul>
+            <li data-i18n="foot_docs">Documentación técnica</li>
+            <li data-i18n="foot_api">API de datos abiertos</li>
+            <li data-i18n="foot_tuts">Tutoriales de observación</li>
+            <li data-i18n="foot_papers">Papers científicos</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 BloomWatch · NASA Space Apps Challenge · <span data-i18n="foot_love">Hecho con pasión por el planeta</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Simple i18n -->
+  <script>
+    const dict = {
+      es:{
+        brand:"BloomWatch Global",
+        hero_title:"BloomWatch: <span class='gradient'>Detección de floraciones desde el espacio</span>",
+        hero_sub:"Monitoreo satelital de floraciones con datos NASA/ESA · actualización reciente (30/90 días)",
+        cov_title:"Cobertura Global de Monitoreo",
+        cov_text:"Nuestro sistema monitorea floraciones espectaculares en diversos biomas. Con múltiples satélites y análisis espectral, detectamos y cuantificamos eventos con precisión.",
+        recommended:"Recomendado",
+        cov_note:"Flexibilidad total: la App permite dibujar AOIs personalizados (rectángulo/polígono).",
+        tech_title:"Tecnología de Detección Avanzada",
+        tech_text:"Integramos datos HLSS30/Sentinel-2 y técnicas de unmixing para floraciones con precisión.",
+        data_sources:"Fuentes de Datos",
+        hls_line:"armonizado Landsat–Sentinel",
+        s2_line:"corrección atmosférica",
+        fallback:"Fallback automático entre sensores",
+        unmix_title:"Unmixing Espectral",
+        unmix_list:"6 endmembers: flores (amarillas/rojas/violetas), hojas, suelo, sombra.",
+        series_title:"Series Temporales",
+        series_text1:"Agregación mensual (medianas robustas) para nubes/outliers.",
+        series_text2:"Fenogramas, picos de floración y tendencias.",
+        idx_title:"Índices Espectrales",
+        mrbi_desc:"Índice de floración (Red-Edge vs Green) + residual de unmixing",
+        ndvire_desc:"Índice de verdor (Red-Edge)",
+        ndyi_desc:"Yellowness (Green vs Blue)",
+        cri_desc:"Carotenoid Reflectance Index",
+        prob_desc:"Probabilidad (0–100%) y score (0–1)",
+        ff_desc:"% del píxel con flores",
+        gee_title:"Google Earth Engine – Plataforma Interactiva",
+        gee_text:"Procesamiento en la nube con HLSS30→S2, MRBI, unmixing y detección mensual de floraciones.",
+        feat_map:"Mapa híbrido con capas de índices",
+        feat_time:"Selector temporal y presets",
+        feat_aoi:"Dibujo de AOI",
+        feat_charts:"Gráficos y fenogramas",
+        feat_thresholds:"Umbrales ajustables",
+        feat_autorun:"Auto-ejecución",
+        legend_title:"Escala MRBI",
+        legend_note:"Valores > 0.30 indican alta probabilidad de floración.",
+        iframe_caption:"Fuente: Google Earth Engine App (HLSS30 / Sentinel-2, composites mensuales)",
+        prod_title:"Productos y Visualizaciones",
+        layers_title:"Capas del Mapa",
+        layers_rgb:"RGB natural (true color)",
+        layers_mrbi:"índice de floración",
+        layers_ff:"Fracción de flores (% de cobertura floral)",
+        layers_ndvire:"estado de la vegetación",
+        layers_prob:"Probabilidad de bloom (0–100%)",
+        stats_title:"Estadísticas AOI",
+        stats_items_1:"MRBI medio y percentil 90",
+        stats_items_2:"Probabilidad de floración promedio",
+        stats_items_3:"Fracción de flores media",
+        stats_items_4:"Área y % del AOI con floración",
+        stats_items_5:"Alineación con temporada esperada",
+        stats_items_6:"Detección de anomalías (vs. climatología)",
+        time_title:"Análisis Temporal",
+        time_items_1:"Series mensuales multi-índice",
+        time_items_2:"Fenogramas MRBI vs NDVI-RE",
+        time_items_3:"Picos y tendencias de floración",
+        cta_title:"¡Unite a la Misión Global!",
+        cta_text:"Sumate a GLOBE Observer y/o iNaturalist para validar las floraciones observadas desde el espacio.",
+        cta_btn_globe:"Participar en GLOBE",
+        cta_btn_inat:"Ver/Reportar en iNaturalist",
+        impact_title:"Impacto del Proyecto",
+        impact_intro:"BloomWatch conecta ciencia y gestión territorial.",
+        imp_agri_t:"Agricultura", imp_agri_d:"Optimización de polinización y predicción de rendimientos.",
+        imp_health_t:"Salud pública", imp_health_d:"Alertas de polen para alergias estacionales.",
+        imp_poll_t:"Polinizadores", imp_poll_d:"Mapeo de recursos florales críticos.",
+        imp_clim_t:"Cambio climático", imp_clim_d:"Floraciones como bioindicadores.",
+        imp_inv_t:"Invasoras", imp_inv_d:"Detección temprana por patrones de floración.",
+        imp_pest_t:"Plagas", imp_pest_d:"Riesgos basados en disponibilidad floral.",
+        foot_sat_t:"Satélites & Sensores", foot_collab_t:"Colaboradores", foot_res_t:"Recursos",
+        foot_docs:"Documentación técnica", foot_api:"API de datos abiertos", foot_tuts:"Tutoriales de observación", foot_papers:"Papers científicos",
+        foot_love:"Hecho con pasión por el planeta"
+      },
+      en:{
+        brand:"BloomWatch Global",
+        hero_title:"BloomWatch: <span class='gradient'>Detecting blooms from space</span>",
+        hero_sub:"Satellite monitoring with NASA/ESA data · recent updates (30/90 days)",
+        cov_title:"Global Monitoring Coverage",
+        cov_text:"We monitor spectacular blooms across biomes. With multi-satellite data and spectral analytics we detect and quantify events with precision.",
+        recommended:"Recommended",
+        cov_note:"Full flexibility: draw custom AOIs (rectangle/polygon) in the App.",
+        tech_title:"Advanced Detection Technology",
+        tech_text:"We combine HLSS30/Sentinel-2 and spectral unmixing to detect flowering accurately.",
+        data_sources:"Data Sources",
+        hls_line:"harmonized Landsat–Sentinel",
+        s2_line:"atmospheric correction",
+        fallback:"Automatic sensor fallback",
+        unmix_title:"Spectral Unmixing",
+        unmix_list:"6 endmembers: flowers (yellow/red/violet), green leaves, soil, shadow.",
+        series_title:"Time Series",
+        series_text1:"Monthly aggregation (robust medians) to handle clouds/outliers.",
+        series_text2:"Phenograms, flowering peaks and trends.",
+        idx_title:"Spectral Indices",
+        mrbi_desc:"Bloom index (Red-Edge vs Green) + unmixing residual",
+        ndvire_desc:"Greenness index (Red-Edge)",
+        ndyi_desc:"Yellowness (Green vs Blue)",
+        cri_desc:"Carotenoid Reflectance Index",
+        prob_desc:"Probability (0–100%) and composite score (0–1)",
+        ff_desc:"% of pixel occupied by flowers",
+        gee_title:"Google Earth Engine – Interactive Platform",
+        gee_text:"Cloud processing with HLSS30→S2, MRBI, unmixing, and monthly bloom detection.",
+        feat_map:"Hybrid map with index overlays",
+        feat_time:"Time presets and range selector",
+        feat_aoi:"AOI drawing",
+        feat_charts:"Charts & phenograms",
+        feat_thresholds:"Adjustable thresholds",
+        feat_autorun:"Auto-run",
+        legend_title:"MRBI Scale",
+        legend_note:"Values > 0.30 indicate high bloom probability.",
+        iframe_caption:"Source: Google Earth Engine App (HLSS30 / Sentinel-2, monthly composites)",
+        prod_title:"Products & Visualizations",
+        layers_title:"Map Layers",
+        layers_rgb:"True-color RGB",
+        layers_mrbi:"bloom index",
+        layers_ff:"Flower fraction (coverage %)",
+        layers_ndvire:"vegetation status",
+        layers_prob:"Bloom probability (0–100%)",
+        stats_title:"AOI Statistics",
+        stats_items_1:"Mean MRBI & 90th percentile",
+        stats_items_2:"Average bloom probability",
+        stats_items_3:"Mean flower fraction",
+        stats_items_4:"Area & % of AOI with bloom",
+        stats_items_5:"Alignment with expected season",
+        stats_items_6:"Anomaly detection (vs climatology)",
+        time_title:"Temporal Analysis",
+        time_items_1:"Monthly multi-index series",
+        time_items_2:"Phenograms MRBI vs NDVI-RE",
+        time_items_3:"Flowering peaks & trends",
+        cta_title:"Join the Global Mission!",
+        cta_text:"Contribute with GLOBE Observer and iNaturalist to validate satellite bloom maps.",
+        cta_btn_globe:"Join GLOBE",
+        cta_btn_inat:"View/Report on iNaturalist",
+        impact_title:"Project Impact",
+        impact_intro:"BloomWatch connects science and on-the-ground decisions.",
+        imp_agri_t:"Agriculture", imp_agri_d:"Optimize pollination and yield prediction.",
+        imp_health_t:"Public Health", imp_health_d:"Pollen alerts for seasonal allergies.",
+        imp_poll_t:"Pollinators", imp_poll_d:"Mapping floral resources.",
+        imp_clim_t:"Climate Change", imp_clim_d:"Blooms as bio-indicators.",
+        imp_inv_t:"Invasives", imp_inv_d:"Early detection via bloom patterns.",
+        imp_pest_t:"Pests", imp_pest_d:"Risk from floral resource dynamics.",
+        foot_sat_t:"Satellites & Sensors", foot_collab_t:"Collaborators", foot_res_t:"Resources",
+        foot_docs:"Technical documentation", foot_api:"Open data API", foot_tuts:"Observation tutorials", foot_papers:"Scientific papers",
+        foot_love:"Built with care for the planet"
+      }
+    };
+
+    function setLang(lang){
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const key = el.getAttribute("data-i18n");
+        const html = dict[lang][key] || el.innerHTML;
+        el.innerHTML = html;
+      });
+      document.documentElement.lang = lang;
+      document.querySelectorAll(".lang-btn").forEach(b=>{
+        b.classList.toggle("active", b.dataset.lang === lang);
+      });
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(btn=>{
+      btn.addEventListener("click", ()=> setLang(btn.dataset.lang));
+    });
+
+    // Default ES
+    setLang('es');
+  </script>
 </body>
 </html>
