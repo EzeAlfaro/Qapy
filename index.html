@@ -8,7 +8,7 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --primary-green:#00d4aa;--primary-yellow:#ffd23f;--orange-bloom:#ff6b47;
+      --primary-green:#00d4aa;--primary-yellow:#ffd23f;--orange-bloom:#ff6b47; 
       --blue-accent:#4f46e5;--dark-blue:#0f172a;--light-gray:#f8fafc;--white:#ffffff;
       --purple-accent:#7c3aed;--pink-accent:#ec4899;--cyan-accent:#06b6d4;
       --rose-accent:#f43f5e;--lime-accent:#65a30d;--indigo-accent:#4338ca;
@@ -306,6 +306,15 @@
       padding-top:2rem;opacity:0.8;position:relative;z-index:1;
       font-size:1rem;
     }
+    /* Accordion (Manual) */
+    .accordion{display:grid;gap:1rem;margin-top:1.5rem}
+    .acc-item{border:1px solid rgba(0,212,170,.25);border-left:4px solid var(--primary-green);border-radius:16px;background:rgba(15,23,42,.45);backdrop-filter:blur(16px);box-shadow:var(--shadow)}
+    .acc-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;cursor:pointer}
+    .acc-title{font-weight:700}
+    .acc-icon{transition:transform .25s ease}
+    .acc-content{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;padding:0 1.25rem}
+    .acc-content.open{padding:0 1.25rem 1rem 1.25rem}
+    .acc-item.open .acc-icon{transform:rotate(90deg)}
     @media(max-width:768px){
       .hero{padding:2.5rem 1.5rem}
       .section{padding:2rem 1.5rem}
@@ -556,6 +565,84 @@
     </section>
   </div>
 
+  <!-- ===== User Manual (Accordion) ===== -->
+  <div class="container">
+    <section class="section" id="manual">
+      <h2 class="section-title" data-i18n="man_title">Manual de Usuario</h2>
+      <p style="margin-bottom:1rem" data-i18n="man_intro">
+        Guía rápida para usar la App de Google Earth Engine (GEE) de BloomWatch.
+      </p>
+
+      <div class="accordion">
+        <!-- Quick Start -->
+        <div class="acc-item">
+          <div class="acc-header">
+            <span class="acc-title" data-i18n="man_quick_title">Inicio rápido</span>
+            <span class="acc-icon">▶</span>
+          </div>
+          <div class="acc-content">
+            <ol style="margin-left:1.25rem" data-i18n="man_quick_list">
+              <li>Elegí la fuente de datos (HLS recomendado).</li>
+              <li>Definí el rango de fechas o usa 30/90 días.</li>
+              <li>Seleccioná un AOI o dibujá rectángulo/polígono.</li>
+              <li>Ajustá umbrales (MRBI y fracción de flores) si querés.</li>
+              <li>Hacé clic en ▶️ Ejecutar análisis.</li>
+              <li>Hacé clic en el mapa para ver el fenograma.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Interface Tour -->
+        <div class="acc-item">
+          <div class="acc-header">
+            <span class="acc-title" data-i18n="man_ui_title">Recorrido de la interfaz</span>
+            <span class="acc-icon">▶</span>
+          </div>
+          <div class="acc-content">
+            <ul style="margin-left:1.25rem" data-i18n="man_ui_list">
+              <li>Mapa híbrido + contorno AOI + capas: Color natural, MRBI, Flores, NDVI-RE, Prob. Bloom.</li>
+              <li>Panel derecho: idioma, fuente/fechas, AOI, umbrales, ejecutar, limpiar, usar vista, link, exportar.</li>
+              <li>Salidas: estadísticas AOI, anomalía vs. climatología, serie temporal, fenograma por clic.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Exports & Tips -->
+        <div class="acc-item">
+          <div class="acc-header">
+            <span class="acc-title" data-i18n="man_export_title">Exportación y consejos</span>
+            <span class="acc-icon">▶</span>
+          </div>
+          <div class="acc-content">
+            <ul style="margin-left:1.25rem" data-i18n="man_export_list">
+              <li>Export raster: GeoTIFF con MRBI, p_bloom, f_flowers, NDVI-RE.</li>
+              <li>Export CSV: serie mensual del AOI.</li>
+              <li>Permalink: copia un enlace con parámetros (fechas, sensor, AOI, umbrales).</li>
+              <li>Consejo: empezá con MRBI 0.20–0.35 y Flores 0.08–0.20; ajustá mirando MRBI+RGB.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="acc-item">
+          <div class="acc-header">
+            <span class="acc-title" data-i18n="man_trouble_title">Solución de problemas</span>
+            <span class="acc-icon">▶</span>
+          </div>
+          <div class="acc-content">
+            <ul style="margin-left:1.25rem" data-i18n="man_trouble_list">
+              <li>“Sin meses válidos”: probá ampliar fechas o usar S2 (fallback automático).</li>
+              <li>“Composite único”: periodo nublado/escaso; probá 90 días o temporada típica.</li>
+              <li>Fenograma vacío: nubes/máscara; clic cercano o usa un parche más grande.</li>
+              <li>Series planas: mezcla de 0–1 y 0–100; mirá p_bloom, MRBI y f_flowers por separado.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- ===== End User Manual ===== -->
+
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -669,7 +756,32 @@
         imp_pest_t:"Plagas", imp_pest_d:"Riesgos basados en disponibilidad floral.",
         foot_sat_t:"Satélites & Sensores", foot_collab_t:"Colaboradores", foot_res_t:"Recursos",
         foot_docs:"Documentación técnica", foot_api:"API de datos abiertos", foot_tuts:"Tutoriales de observación", foot_papers:"Papers científicos",
-        foot_love:"Hecho con pasión por el planeta"
+        foot_love:"Hecho con pasión por el planeta",
+
+        /* ===== Manual ES ===== */
+        man_title:"Manual de Usuario",
+        man_intro:"Guía rápida para usar la App de Google Earth Engine (GEE) de BloomWatch.",
+        man_quick_title:"Inicio rápido",
+        man_quick_list:`<li>Elegí la fuente de datos (HLS recomendado).</li>
+<li>Definí el rango de fechas o usa 30/90 días.</li>
+<li>Seleccioná un AOI o dibujá rectángulo/polígono.</li>
+<li>Ajustá umbrales (MRBI y fracción de flores) si querés.</li>
+<li>Hacé clic en ▶️ Ejecutar análisis.</li>
+<li>Hacé clic en el mapa para ver el fenograma.</li>`,
+        man_ui_title:"Recorrido de la interfaz",
+        man_ui_list:`<li>Mapa híbrido + contorno AOI + capas: Color natural, MRBI, Flores, NDVI-RE, Prob. Bloom.</li>
+<li>Panel derecho: idioma, fuente/fechas, AOI, umbrales, ejecutar, limpiar, usar vista, link, exportar.</li>
+<li>Salidas: estadísticas AOI, anomalía vs. climatología, serie temporal, fenograma por clic.</li>`,
+        man_export_title:"Exportación y consejos",
+        man_export_list:`<li>Export raster: GeoTIFF con MRBI, p_bloom, f_flowers, NDVI-RE.</li>
+<li>Export CSV: serie mensual del AOI.</li>
+<li>Permalink: copia un enlace con parámetros (fechas, sensor, AOI, umbrales).</li>
+<li>Consejo: empezá con MRBI 0.20–0.35 y Flores 0.08–0.20; ajustá mirando MRBI+RGB.</li>`,
+        man_trouble_title:"Solución de problemas",
+        man_trouble_list:`<li>“Sin meses válidos”: probá ampliar fechas o usar S2 (fallback automático).</li>
+<li>“Composite único”: periodo nublado/escaso; probá 90 días o temporada típica.</li>
+<li>Fenograma vacío: nubes/máscara; clic cercano o usa un parche más grande.</li>
+<li>Series planas: mezcla de 0–1 y 0–100; mirá p_bloom, MRBI y f_flowers por separado.</li>`
       },
       en:{
         brand:"BloomWatch Global",
@@ -740,7 +852,32 @@
         imp_pest_t:"Pests", imp_pest_d:"Risk from floral resource dynamics.",
         foot_sat_t:"Satellites & Sensors", foot_collab_t:"Collaborators", foot_res_t:"Resources",
         foot_docs:"Technical documentation", foot_api:"Open data API", foot_tuts:"Observation tutorials", foot_papers:"Scientific papers",
-        foot_love:"Built with care for the planet"
+        foot_love:"Built with care for the planet",
+
+        /* ===== Manual EN ===== */
+        man_title:"User Manual",
+        man_intro:"Quick guide for using the BloomWatch Google Earth Engine (GEE) App.",
+        man_quick_title:"Quick Start",
+        man_quick_list:`<li>Pick the data source (HLS recommended).</li>
+<li>Set the date range or use 30/90-day presets.</li>
+<li>Choose an AOI preset or draw a rectangle/polygon.</li>
+<li>Optionally tweak thresholds (MRBI and flower fraction).</li>
+<li>Click ▶️ Run analysis.</li>
+<li>Click the map to see the phenogram.</li>`,
+        man_ui_title:"Interface tour",
+        man_ui_list:`<li>Hybrid map + AOI outline + layers: Natural Color, MRBI, Flowers, NDVI-RE, Bloom Probability.</li>
+<li>Right panel: language, source/dates, AOI, thresholds, run, clear, use view, link, exports.</li>
+<li>Outputs: AOI stats, anomaly vs climatology, time series, on-click phenogram.</li>`,
+        man_export_title:"Exports & tips",
+        man_export_list:`<li>Export raster: GeoTIFF with MRBI, p_bloom, f_flowers, NDVI-RE.</li>
+<li>Export CSV: monthly AOI time series.</li>
+<li>Permalink: copy a link with parameters (dates, sensor, AOI, thresholds).</li>
+<li>Tip: start with MRBI 0.20–0.35 and Flowers 0.08–0.20; tune by inspecting MRBI+RGB.</li>`,
+        man_trouble_title:"Troubleshooting",
+        man_trouble_list:`<li>“No valid months”: extend dates or use S2 (automatic fallback).</li>
+<li>“Single composite”: cloudy/sparse period; try 90 days or seasonal windows.</li>
+<li>Empty phenogram: clouds/masks; click nearby or use a larger homogeneous patch.</li>
+<li>Flat series: mixing 0–1 and 0–100; compare p_bloom, MRBI and f_flowers separately.</li>`
       }
     };
 
@@ -762,6 +899,35 @@
 
     // Default ES
     setLang('es');
+
+    // Accordion behavior
+    document.querySelectorAll('.acc-item').forEach(item=>{
+      const header = item.querySelector('.acc-header');
+      const content = item.querySelector('.acc-content');
+      header.addEventListener('click', ()=>{
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.acc-item').forEach(i=>{
+          i.classList.remove('open');
+          const c = i.querySelector('.acc-content');
+          c.style.maxHeight = null;
+          c.classList.remove('open');
+        });
+        if(!isOpen){
+          item.classList.add('open');
+          content.classList.add('open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Open first accordion by default
+    const firstAcc = document.querySelector('.acc-item');
+    if(firstAcc){
+      firstAcc.classList.add('open');
+      const c = firstAcc.querySelector('.acc-content');
+      c.classList.add('open');
+      c.style.maxHeight = c.scrollHeight + 'px';
+    }
   </script>
 </body>
 </html>
