@@ -1,0 +1,20 @@
+// ... existing code ...
+<button id="showScriptBtn" style="margin:2rem 0;padding:1rem 2rem;background:var(--primary-green);color:var(--dark-blue);font-weight:bold;border:none;border-radius:25px;cursor:pointer;box-shadow:var(--border-glow);">Script Code</button>
+
+<section id="geeScriptSection" class="gee-section" style="display:none;">
+  <h2 class="section-title">Código fuente GEE</h2>
+  <pre style="background:rgba(0,0,0,0.7);color:#fff;padding:2rem;border-radius:15px;overflow-x:auto;font-size:1rem;line-height:1.5;">
+// Pega aquí tu script de Google Earth Engine
+function miFuncionGEE() {
+  // ... tu código ...
+}
+  </pre>
+</section>
+
+<script>
+document.getElementById('showScriptBtn').addEventListener('click', function() {
+  var section = document.getElementById('geeScriptSection');
+  section.style.display = section.style.display === 'none' ? 'block' : 'none';
+});
+</script>
+// ... existing code ...

@@ -479,7 +479,7 @@
 
       <div class="iframe-container">
         <iframe
-          src="https://ainabi-dev.projects.earthengine.app/view/demo2"
+          src="https://ainabi-dev.projects.earthengine.app/view/demo3"
           style="width:100%;height:700px;border:0;border-radius:10px"
           loading="lazy"
           referrerpolicy="no-referrer"
@@ -498,6 +498,11 @@
         <button id="copy-gee-url" class="cta-button" style="background:#2c7fb8" data-i18n="copy_app_btn">
           Copiar enlace del App
         </button>
+
+        <button id="view-gee-code" class="cta-button" data-i18n="view_code_btn" style="background:#0ea5e9">
+          Ver código (GEE)
+        </button>
+
       </div>
       <p class="gee-quick-note" data-i18n="open_app_note">
         Demo: las funciones de Export (GeoTIFF/CSV) están deshabilitadas por ahora. Se incorporarán en una versión próxima.
@@ -692,6 +697,7 @@
   <script>
     const dict = {
       es:{
+
         brand:"BloomWatch Global",
         hero_title:"BloomWatch: <span class='gradient'>Detección de floraciones desde el espacio</span>",
         hero_sub:"Monitoreo satelital de floraciones con datos NASA/ESA · actualización reciente (30/90 días)",
@@ -797,9 +803,12 @@
         demo_alert_title:"Modo demostración:",
         demo_alert_text:"Las exportaciones no están disponibles en esta demo. Están planificadas para futuras versiones públicas del App.",
         demo_inline_note:"Nota:",
-        demo_inline_text:"en esta demo, las exportaciones están deshabilitadas; se habilitarán en una versión futura."
+        demo_inline_text:"en esta demo, las exportaciones están deshabilitadas; se habilitarán en una versión futura.",
+        view_code_btn:"Ver código (GEE)"
+      
       },
       en:{
+
         brand:"BloomWatch Global",
         hero_title:"BloomWatch: <span class='gradient'>Detecting blooms from space</span>",
         hero_sub:"Satellite monitoring with NASA/ESA data · recent updates (30/90 days)",
@@ -905,7 +914,9 @@
         demo_alert_title:"Demo mode:",
         demo_alert_text:"Exports are not available in this demo. They’re planned for future public releases of the App.",
         demo_inline_note:"Note:",
-        demo_inline_text:"in this demo, exports are disabled; they will be enabled in a future version."
+        demo_inline_text:"in this demo, exports are disabled; they will be enabled in a future version.",
+        view_code_btn:"View code (GEE)"
+      
       }
     };
 
@@ -986,6 +997,870 @@
         });
       }
     })();
-  </script>
+  
+// ===== Add handler for "Ver código (GEE)" =====
+
+
+</script>
+<script id="gee-source" type="text/plain">
+/***************************************
+ * BloomWatch — Earth Engine App (PRO, one-file)
+ * ENGLISH-ONLY VERSION
+ * - UI: SplitPanel (map + fixed panel)
+ * - Auto-run on load
+ * - HLSS30 → fallback Sentinel-2 (loose)
+ * - Unmix + residual + MRBI + p_bloom
+ * - Monthly series (robust, bestEffort, tileScale)
+ * - AOI lore + anomaly (MRBI vs. climatology N years)
+ * - Export raster/CSV + permalink
+ ***************************************/
+
+/* ================== UTIL & DATES ================== */
+function pad2(n){ return (n<10 ? '0' : '') + n; }
+function fmtDate(d){ return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
+
+var NOW = new Date();
+var START_DEF = new Date(NOW.getTime() - 90*24*60*60*1000);
+var START_DATE = fmtDate(START_DEF);
+var END_DATE   = fmtDate(NOW);
+
+var BANDLIST = ['B2','B3','B4','B5','B6','B7','B8','B8A','B11','B12'];
+var SUM_SCALE = 200; // reductions & series: fast/robust
+
+function aggGeom(g){ return ee.Geometry(g).simplify(1000); }
+function clamp01(img){ return img.max(0).min(1); }
+function pctStr(x){ return (x==null || isNaN(x)) ? '—' : (Number(x)*100).toFixed(1)+'%'; }
+function numStr(x, d){ return (x==null || isNaN(x)) ? '—' : Number(x).toFixed(d||3); }
+var MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/* ============ CONSTANTS & THRESHOLDS ============= */
+var CLIMO_BACK_YEARS = 6; // baseline years back
+var ANOM_STRONG = 0.15;   // strong anomaly threshold (MRBI)
+var ANOM_MOD = 0.08;      // moderate
+function shiftYear(dateStr, deltaYears){ return ee.Date(dateStr).advance(deltaYears, 'year').format('YYYY-MM-dd'); }
+
+/* ================== UI LAYOUT ================== */
+ui.root.clear();
+var map = ui.Map(); map.setOptions('HYBRID');
+
+var rightPanel = ui.Panel({style:{width:'420px', minWidth:'420px', padding:'12px'}});
+var split = ui.SplitPanel({ firstPanel: map, secondPanel: rightPanel, orientation: 'horizontal', wipe: false });
+ui.root.add(split);
+
+// Title
+var titleLabel = ui.Label({ value: '🌼 BloomWatch — NASA EO (GEE)', style:{fontSize:'18px', fontWeight:'bold', color:'#16a34a'} });
+rightPanel.add(titleLabel);
+
+/* ================== CONTROLS ================== */
+rightPanel.add(ui.Label('Data source'));
+
+var sensorSelect = ui.Select({
+  items: [
+    {label: 'HLS v2 (HLSS30, 30 m) — recommended', value: 'HLS'},
+    {label: 'Sentinel-2 SR (10 m)',                value: 'S2'}
+  ],
+  value: 'HLS', style:{stretch:'horizontal', margin:'6px 0'}
+});
+rightPanel.add(sensorSelect);
+
+rightPanel.add(ui.Label('Date range (YYYY-MM-DD'));
+
+var startBox = ui.Textbox({value: START_DATE, style:{width:'48%'}});
+var endBox   = ui.Textbox({value: END_DATE,   style:{width:'48%'}});
+rightPanel.add(ui.Panel([startBox, endBox], ui.Panel.Layout.flow('horizontal')));
+
+// Quick date buttons
+function qBtn(lbl, fn){ return ui.Button({label: lbl, onClick: fn, style:{margin:'4px 4px 0 0'}}); }
+var quickRow = ui.Panel({layout: ui.Panel.Layout.flow('horizontal')});
+quickRow.add(qBtn('🕒 Last 30 days', function(){ var e=new Date(), s=new Date(e.getTime()-30*24*60*60*1000); startBox.setValue(fmtDate(s)); endBox.setValue(fmtDate(e)); }));
+quickRow.add(qBtn('🕒 Last 90 days', function(){ var e=new Date(), s=new Date(e.getTime()-90*24*60*60*1000); startBox.setValue(fmtDate(s)); endBox.setValue(fmtDate(e)); }));
+quickRow.add(qBtn('🌼 South Aug–Dec', function(){ var y=new Date().getFullYear(); startBox.setValue(y+'-08-01'); endBox.setValue(y+'-12-31'); }));
+rightPanel.add(quickRow);
+
+// AOI presets
+var AOI_PRESETS = {
+  'Western Australia — Mid West (AU) [recommended]': ee.Geometry.Rectangle([114.5,-30.8,117.5,-27.8]),
+  'Namaqualand (ZA)':                                 ee.Geometry.Rectangle([16.5,-31.5,19.5,-29.5]),
+  'Carrizo Plain (California, US)':                   ee.Geometry.Rectangle([-120.9,34.9,-118.6,36.2]),
+  'Castilla-La Mancha (ES)':                          ee.Geometry.Rectangle([-4.9,38.0,-2.8,39.6]),
+  'Hokkaido (JP)':                                    ee.Geometry.Rectangle([141.0,42.3,144.0,43.9]),
+  'Bahía Blanca (AR)':                                ee.Geometry.Rectangle([-64.0,-40.0,-60.5,-37.6])
+};
+
+// AOI lore (short field notes)
+var AOI_INFO = {
+  'Western Australia — Mid West (AU) [recommended]': {
+    title: 'Mid West, Western Australia',
+    summary: 'Open shrublands/woodlands; famous spring “everlastings”.',
+    months: 'Sep–Nov (austral spring)',
+    drivers: 'Winter rainfall + sandy soils + spring warming.',
+    species: 'Everlastings (Asteraceae), Banksia, Grevillea, Hakea.',
+    validation: 'Record mass blooms, dominant color, 3 photos (panorama + macro + leaf).'
+  },
+  'Namaqualand (ZA)': {
+    title: 'Namaqualand, South Africa',
+    summary: 'Cold coastal desert; “flower carpets” after winter rains.',
+    months: 'Aug–Oct',
+    drivers: 'Cold fronts + coastal fog + warming spells.',
+    species: 'Dimorphotheca, Arctotis, Felicia.',
+    validation: 'Large patches; dominant color; upload to iNaturalist.'
+  },
+  'Carrizo Plain (California, US)': {
+    title: 'Carrizo Plain, California',
+    summary: 'Semi-arid plains with superblooms in wet years.',
+    months: 'Mar–May',
+    drivers: 'Fall/winter rains + mild springs.',
+    species: 'Tidy tips, goldfields, phacelia, lupines.',
+    validation: 'Tag “superbloom”; panorama and macro.'
+  },
+  'Castilla-La Mancha (ES)': {
+    title: 'Castilla-La Mancha, Spain',
+    summary: 'Cereal–scrub–oak mosaic; spring blooms.',
+    months: 'Apr–Jun',
+    drivers: 'Late-winter rains + spring warming.',
+    species: 'Poppies (Papaver), Cistus, grasses.',
+    validation: 'Field margins and fallows; red/yellow/purple hues.'
+  },
+  'Hokkaido (JP)': {
+    title: 'Hokkaido, Japan',
+    summary: 'Cool climate; late peak blooming.',
+    months: 'May–Jul',
+    drivers: 'Snowmelt + long photoperiod + mild spells.',
+    species: 'Lavender, Nemophila, boreal spp.',
+    validation: 'Note phenophase and visible pollinators.'
+  },
+  'Bahía Blanca (AR)': {
+    title: 'Bahía Blanca, Argentina',
+    summary: 'Coastal steppe/espinal; subtle, brief blooms.',
+    months: 'Oct–Dec',
+    drivers: 'Spring rains + warm pulses + moisture availability.',
+    species: 'Yellow composites, native grasses, urban ornamentals.',
+    validation: 'Parks and rural verges; photos and dominant color.'
+  }
+};
+
+// Threshold presets per AOI
+var THRESH_PRESETS = {
+  'Western Australia — Mid West (AU) [recommended]': {mrbi:0.30, flowers:0.15},
+  'Namaqualand (ZA)':                                 {mrbi:0.28, flowers:0.12},
+  'Carrizo Plain (California, US)':                   {mrbi:0.25, flowers:0.10},
+  'Castilla-La Mancha (ES)':                          {mrbi:0.22, flowers:0.08},
+  'Hokkaido (JP)':                                    {mrbi:0.26, flowers:0.10},
+  'Bahía Blanca (AR)':                                {mrbi:0.20, flowers:0.08}
+};
+
+var AOI = AOI_PRESETS['Western Australia — Mid West (AU) [recommended]'];
+
+rightPanel.add(ui.Label('AOI (optimized global presets)'));
+
+var aoiDropdown = ui.Select({
+  items:Object.keys(AOI_PRESETS),
+  value:'Western Australia — Mid West (AU) [recommended]',
+  onChange:function(k){
+    AOI = AOI_PRESETS[k];
+    map.centerObject(AOI,7);
+    drawAOIOutline();
+    var preset = THRESH_PRESETS[k];
+    if (preset){ mrbiThr.setValue(preset.mrbi); flowersThr.setValue(preset.flowers); }
+    renderLore(k, null, sensorSelect.getValue()==='HLS' ? 'HLSS30' : 'S2');
+    refreshSeasonHint();
+  }
+});
+rightPanel.add(aoiDropdown);
+
+// Draw AOI tools
+var dt = map.drawingTools();
+dt.setShown(true);
+dt.setDrawModes(['rectangle','polygon']);
+
+var drawRow = ui.Panel({layout: ui.Panel.Layout.flow('horizontal')});
+drawRow.add(ui.Button({label:'✏️ Rectangle', onClick:function(){ dt.setShape('rectangle'); dt.draw(); }, style:{margin:'4px 8px 0 0'}}));
+drawRow.add(ui.Button({label:'🔺 Polygon',   onClick:function(){ dt.setShape('polygon');   dt.draw(); }, style:{margin:'4px 0 0 0'}}));
+rightPanel.add(drawRow);
+
+dt.onDraw(function(geom){
+  if (geom){
+    AOI = ee.Geometry(geom); map.centerObject(AOI,9); drawAOIOutline();
+    renderLore(aoiDropdown.getValue(), null, sensorSelect.getValue()==='HLS' ? 'HLSS30' : 'S2');
+  }
+});
+
+// Thresholds
+rightPanel.add(ui.Label('Alert thresholds'));
+
+var mrbiThr = ui.Slider({min:-0.1,max:0.8,value:0.30,step:0.01,style:{stretch:'horizontal'}});
+var flowersThr = ui.Slider({min:0,max:0.60,value:0.15,step:0.01,style:{stretch:'horizontal'}});
+rightPanel.add(ui.Panel([ui.Label('MRBI ≥'), mrbiThr, ui.Label('  Flowers ≥'), flowersThr],
+                        ui.Panel.Layout.flow('horizontal')));
+
+// Expected season hint
+var seasonHint = ui.Label('', {color:'#6b7280', margin:'4px 0 8px 0'});
+rightPanel.add(seasonHint);
+
+function expectedMonthsFromString(txt){
+  if (!txt) return null;                 // e.g., "Sep–Nov (austral spring)"
+  var parts = txt.split('(')[0].trim();  // "Sep–Nov"
+  var ranges = parts.split(/[,;]/);
+  var set = {};
+  function mIdx(s){
+    var m = s.trim().substr(0,3).toLowerCase();
+    var en = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+    return (m in en)? en[m] : null;
+  }
+  ranges.forEach(function(r){
+    r = r.trim(); if (!r) return;
+    var mm = r.split('–');
+    if (mm.length===2){
+      var a = mIdx(mm[0]), b = mIdx(mm[1]);
+      if (a!=null && b!=null){
+        for (var i=0;i<12;i++){ var j=(a+i)%12; set[j]=true; if (j===b) break; }
+      }
+    } else {
+      var one = mIdx(r); if (one!=null) set[one]=true;
+    }
+  });
+  var arr = []; for (var k in set){ if (set[k]) arr.push(Number(k)); }
+  return arr;
+}
+function expectedMonthsByHemisphere(centroidLat){
+  return (centroidLat < 0) ? [8,9,10,11,0] : [2,3,4,5]; // South: Sep–Jan; North: Mar–Jun
+}
+function expectedMonthsForAOI(aoiKey, aoiGeom){
+  var info = AOI_INFO[aoiKey];
+  var arr = info && info.months ? expectedMonthsFromString(info.months) : null;
+  if (arr && arr.length) return arr;
+  var lat = ee.Number(ee.Geometry(aoiGeom).centroid().coordinates().get(1)).getInfo();
+  return expectedMonthsByHemisphere(lat);
+}
+function refreshSeasonHint(){
+  var k = aoiDropdown.getValue();
+  var info = AOI_INFO[k];
+  seasonHint.setValue(info ? ('🗓️ Expected season: ' + info.months) : '');
+}
+refreshSeasonHint();
+
+// RUN button
+var runBtn = ui.Button({label:'▶️ Run analysis', style:{margin:'8px 0'}});
+rightPanel.add(runBtn);
+
+/* ======= Extra tools ======= */
+var toolsRow = ui.Panel({layout: ui.Panel.Layout.flow('horizontal')});
+var clearBtn = ui.Button({label:'🧹 Clear drawings', onClick:function(){
+  var layers = dt.layers();
+  for (var i=layers.length()-1; i>=0; i--) {
+    var layer = layers.get(i);
+    while(layer.geometries().length()>0){ layer.geometries().remove(layer.geometries().get(0)); }
+  }
+}, style:{margin:'4px 8px 0 0'}});
+var useViewBtn = ui.Button({label:'🗺️ Use current view', onClick:function(){
+  AOI = map.getBounds(true);
+  map.centerObject(AOI, map.getZoom());
+  drawAOIOutline();
+}, style:{margin:'4px 0 0 0'}});
+toolsRow.add(clearBtn); toolsRow.add(useViewBtn);
+rightPanel.add(toolsRow);
+
+// Permalink
+function buildPermalink(){
+  var bbox = ee.Geometry(AOI).bounds().coordinates().flatten().getInfo();
+  var params = {
+    start: startBox.getValue(),
+    end: endBox.getValue(),
+    sensor: sensorSelect.getValue(),
+    mrbi: mrbiThr.getValue(),
+    flowers: flowersThr.getValue(),
+    preset: aoiDropdown.getValue(),
+    bbox: bbox
+  };
+  var loc = ui.url.getLocation();
+  var url = 'https://' + (loc && loc.get ? loc.get('host') : 'apps.earthengine.google.com') +
+            (loc && loc.get ? loc.get('path') : '') + '?state=' + encodeURIComponent(JSON.stringify(params));
+  return url;
+}
+var copyLinkBtn = ui.Button({label:'🔗 Copy link', onClick:function(){
+  var url = buildPermalink();
+  print('🔗 Permalink:', url);
+  if (ui.clipboard) ui.clipboard().set(url);
+}});
+rightPanel.add(copyLinkBtn);
+
+// Exports
+var exportRasterBtn = ui.Button({
+  label: '💾 Export raster',
+  onClick: function(){
+    if (!lastResult){ print('No result yet.'); return; }
+    Export.image.toDrive({
+      image: ee.Image(lastResult.latest).select(['MRBI','p_bloom','f_flowers','NDVI_RE']),
+      description: 'BloomWatch_latest_'+startBox.getValue(),
+      region: AOI, scale: 30, maxPixels: 1e13
+    });
+    print('✅ Raster export started → Tasks');
+  }
+});
+var exportCSVBtn = ui.Button({
+  label: '📊 Export time series (CSV)',
+  onClick: function(){
+    if (!lastResult){ print('No result yet.'); return; }
+    var fc = seriesMeanFC(lastResult.seriesOk, AOI, SUM_SCALE);
+    Export.table.toDrive({
+      collection: fc,
+      description: 'BloomWatch_series_'+startBox.getValue(),
+      fileFormat: 'CSV'
+    });
+    print('✅ CSV export started → Tasks');
+  }
+});
+rightPanel.add(ui.Panel([exportRasterBtn, exportCSVBtn], ui.Panel.Layout.flow('horizontal')));
+
+/* ============= OUTPUT PANELS ============= */
+var statsPanel = ui.Panel({style:{backgroundColor:'#f0fdf4', padding:'8px', margin:'8px 0'}});
+var anomalyPanel = ui.Panel({style:{backgroundColor:'#fff7ed', padding:'8px', margin:'8px 0', border:'1px solid #fed7aa'}});
+var chartsPanel = ui.Panel();
+rightPanel.add(statsPanel);
+rightPanel.add(anomalyPanel);
+rightPanel.add(chartsPanel);
+
+// Lore
+rightPanel.add(ui.Label({value:'ℹ️ About this place', style:{fontWeight:'bold'}}));
+var lorePanel = ui.Panel({style:{backgroundColor:'#fff', padding:'8px', margin:'8px 0', border:'1px solid #e5e7eb'}});
+rightPanel.add(lorePanel);
+
+/* ============= LORE RENDER ============= */
+function renderLore(aoiKey, stats, srcLabel){
+  var info = AOI_INFO[aoiKey] || {title:aoiKey, summary:'', months:'—', drivers:'—', species:'—', validation:'—'};
+  lorePanel.clear();
+  lorePanel.add(ui.Label(info.title, {fontWeight:'bold'}));
+  if (info.summary)   lorePanel.add(ui.Label('Summary: ' + info.summary));
+  if (info.months)    lorePanel.add(ui.Label('Expected season: ' + info.months));
+  if (info.drivers)   lorePanel.add(ui.Label('Key drivers: ' + info.drivers));
+  if (info.species)   lorePanel.add(ui.Label('Typical species: ' + info.species));
+
+  var mrbi   = (stats && stats.MRBI_mean!=null) ? Number(stats.MRBI_mean) : null;
+  var ffl    = (stats && stats.f_flowers_mean!=null) ? Number(stats.f_flowers_mean) : null;
+  var prob   = (stats && stats.bloom_probability_mean!=null) ? Number(stats.bloom_probability_mean)/100 : null;
+
+  var line   = 'Current status ('+srcLabel+'): ';
+  if (mrbi!=null && ffl!=null){
+    if (mrbi>0.35 && ffl>0.20)      line += 'Strong bloom signal in regional aggregate.';
+    else if (mrbi>0.20 && ffl>0.10) line += 'Moderate blooming, probably patchy.';
+    else                            line += 'Weak or absent at this temporal scale.';
+  } else {
+    line += 'Not enough data yet to interpret.';
+  }
+  lorePanel.add(ui.Label(line));
+  if (prob!=null) lorePanel.add(ui.Label('Composite bloom probability: ' + pctStr(prob)));
+  if (info.validation) lorePanel.add(ui.Label('Suggested validation: ' + info.validation));
+}
+
+/* ============= AOI OUTLINE & QUICK RGB ============= */
+var aoiOutlineLayer;
+function drawAOIOutline(){
+  if (aoiOutlineLayer) map.layers().remove(aoiOutlineLayer);
+  var outline = ee.Image().byte().paint(AOI, 1, 2);
+  aoiOutlineLayer = map.addLayer(outline, {palette:'white'}, 'AOI (edge)', true);
+}
+function quickRGB(start, end){
+  var s2 = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+    .filterDate(start, end).filterBounds(AOI)
+    .map(function(img){
+      var qa = img.select('QA60');
+      var cloud = qa.bitwiseAnd(1<<10).neq(0);
+      var cirrus = qa.bitwiseAnd(1<<11).neq(0);
+      var mask = cloud.or(cirrus).not();
+      return img.updateMask(mask).divide(10000);
+    });
+  var m = ee.Image(ee.Algorithms.If(s2.size().gt(0), s2.median(),
+    ee.Image.constant([0,0,0]).rename(['B4','B3','B2']).float()));
+  return m.select(['B4','B3','B2']);
+}
+
+/* ============= COLLECTIONS ============= */
+function getHLS(start, end){
+  function renameHLS(img){
+    var from = ['B02','B03','B04','B05','B06','B07','B08','B8A','B11','B12'];
+    return img.select(from, BANDLIST).copyProperties(img, ['system:time_start']);
+  }
+  return ee.ImageCollection('NASA/HLS/HLSS30/v002')
+    .filterDate(start, end).filterBounds(AOI).map(renameHLS);
+}
+function getS2Loose(start, end){
+  function prep(img){ return img.divide(10000).select(BANDLIST).copyProperties(img,['system:time_start']); }
+  return ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+    .filterDate(start, end).filterBounds(AOI).map(prep);
+}
+
+// Climatology (baseline with S2 loose)
+function buildClimatologyComposite(startStr, endStr, yearsBack){
+  var ranges = ee.List.sequence(1, yearsBack).map(function(k){
+    k = ee.Number(k);
+    return ee.Dictionary({ s: shiftYear(startStr, -k), e: shiftYear(endStr, -k) });
+  });
+
+  var empty = ee.ImageCollection([]);
+  var ic = ee.ImageCollection(
+    ee.List(ranges).iterate(function(rec, acc){
+      rec = ee.Dictionary(rec);
+      var s = ee.String(rec.get('s'));
+      var e = ee.String(rec.get('e'));
+      var icPart = getS2Loose(s, e);
+      return ee.ImageCollection(acc).merge(icPart);
+    }, empty)
+  );
+
+  return ee.Image(ee.Algorithms.If(ic.size().gt(0), ic.median(), ee.Image()));
+}
+
+/* ============= ENDMEMBERS & INDICES ============= */
+var ENDM_LIST = [
+  [0.08,0.12,0.18,0.22,0.35,0.45,0.50,0.48,0.25,0.15], # yellow flower
+  [0.06,0.09,0.22,0.26,0.38,0.46,0.49,0.47,0.24,0.16], # red flower
+  [0.05,0.08,0.12,0.20,0.34,0.44,0.48,0.46,0.23,0.15], # violet flower
+  [0.04,0.08,0.05,0.12,0.28,0.42,0.58,0.56,0.30,0.18], # green leaves
+  [0.12,0.16,0.20,0.24,0.28,0.32,0.35,0.34,0.38,0.42], # soil
+  [0.02,0.02,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01]  # shadow
+];
+var ENDM_NAMES = ['f_yellow','f_red','f_violet','f_leaves','f_soil','f_shadow'];
+
+function spectralUnmixing(img){
+  var fractions = img.select(BANDLIST).unmix(ENDM_LIST, false, true).rename(ENDM_NAMES);
+  var M = ee.Array(ENDM_LIST).transpose(); # 10x6
+  var fArr = fractions.toArray().toArray(1); # 6x1
+  var modeled = ee.Image(M).matrixMultiply(fArr).arrayProject([0]).arrayFlatten([BANDLIST]);
+  var resid = img.select(BANDLIST).subtract(modeled);
+  var residual_mag = resid.pow(2).reduce(ee.Reducer.mean()).sqrt().rename('residual');
+  return img.addBands(fractions).addBands(residual_mag);
+}
+
+function addIndices(img){
+  var MRBI = img.expression('((RE2 - G) / (RE2 + G)) * (1 + R)', {
+    RE2: img.select('B6'), G: img.select('B3'), R: img.select('residual')
+  }).rename('MRBI');
+  var NDVI_RE = img.normalizedDifference(['B8','B5']).rename('NDVI_RE');
+  var NDYI    = img.normalizedDifference(['B3','B2']).rename('NDYI');
+  var CRI     = img.expression('(1/B2) - (1/B6)', {B2: img.select('B2'), B6: img.select('B6')}).rename('CRI');
+  var fFlowers  = img.select(['f_yellow','f_red','f_violet']).reduce(ee.Reducer.sum()).rename('f_flowers');
+  var bloomProb = fFlowers.divide(fFlowers.add(img.select('f_leaves')).add(1e-6)).multiply(100).rename('bloom_probability');
+  var p_bloom = clamp01(
+    img.expression('(MRBI + 0.2) / 0.8', {MRBI: MRBI}).multiply(0.4)
+      .add(img.expression('(NDYI + 0.1) / 0.6', {NDYI: NDYI}).multiply(0.2))
+      .add(bloomProb.divide(100).multiply(0.4))
+  ).rename('p_bloom');
+  return img.addBands([MRBI, NDVI_RE, NDYI, CRI, fFlowers, bloomProb, p_bloom]);
+}
+
+/* ============= MONTHLY SERIES & REDUCTIONS ============= */
+function monthSeries(ic, start, end){
+  var s = ee.Date(start), e = ee.Date(end);
+  var months = e.difference(s, 'month').floor();
+  var idx = ee.List.sequence(0, months);
+  return ee.ImageCollection(idx.map(function(i){
+    var mStart = s.advance(i, 'month'), mEnd = mStart.advance(1,'month');
+    var set = ic.filterDate(mStart, mEnd);
+    var img = ee.Algorithms.If(set.size().gt(0),
+      set.median().set('system:time_start', mStart.millis()),
+      ee.Image().set('system:time_start', mStart.millis()));
+    return img;
+  }));
+}
+
+// Ensure non-empty by requiring MRBI band
+function ensureNonEmpty(icProcessed, start, end){
+  var icOk = icProcessed.filter(ee.Filter.listContains('system:band_names', 'MRBI'));
+  return ee.ImageCollection(ee.Algorithms.If(icOk.size().gt(0),
+    icOk,
+    ee.ImageCollection([icProcessed.reduce(ee.Reducer.median())
+      .set('system:time_start', ee.Date(end).millis())])
+  ));
+}
+
+// AOI means per image (mask AND across selected bands)
+function seriesMeanFC(ic, region, scale){
+  var R = aggGeom(region);
+  var wanted = ee.List(['MRBI','NDVI_RE','bloom_probability','f_flowers','p_bloom']);
+
+  var col = ic.map(function(img){
+    img = ee.Image(img);
+
+    var present = img.bandNames();
+    var keep = wanted.map(function(b){
+      b = ee.String(b);
+      return ee.Algorithms.If(present.contains(b), b, null);
+    }).removeAll([null]);
+
+    var hasAny = ee.Number(ee.List(keep).size()).gt(0);
+    var dateProp = ee.Date(img.get('system:time_start'));
+
+    return ee.Algorithms.If(hasAny, (function(){
+      var sel = img.select(keep);
+      var maskRef = sel.mask().reduce(ee.Reducer.min()); // AND of masks
+      var toReduce = sel.updateMask(maskRef);
+
+      var stats = toReduce.reduceRegion({
+        reducer: ee.Reducer.mean(),
+        geometry: R,
+        scale: scale,
+        bestEffort: true,
+        maxPixels: 5e13,
+        tileScale: 2
+      });
+      return ee.Feature(null, stats).set('date', dateProp);
+    })(), ee.Feature(null, {}).set('date', dateProp));
+  });
+
+  return ee.FeatureCollection(col);
+}
+
+// Bloom area & percent
+function bloomAreaStats(img, region, mrbiMin, ffracMin, scale){
+  var regionS = aggGeom(region);
+  var bloomMask = img.select('MRBI').gte(mrbiMin).and(img.select('f_flowers').gte(ffracMin));
+  var ones = ee.Image.pixelArea().updateMask(bloomMask);
+  var areaBloom = ones.reduceRegion({
+    reducer: ee.Reducer.sum(), geometry: regionS, scale: scale, bestEffort: true, maxPixels: 5e13, tileScale: 2
+  }).get('area');
+  var areaTotal = ee.Image.pixelArea().reduceRegion({
+    reducer: ee.Reducer.sum(), geometry: regionS, scale: scale, bestEffort: true, maxPixels: 5e13, tileScale: 2
+  }).get('area');
+  return ee.Dictionary({ areaBloom: areaBloom, areaTotal: areaTotal });
+}
+function km2(m2){ return (m2==null)? null : (Number(m2)/1e6); }
+
+// Monthly means & alignment
+function monthlyMeansByAOI(ic, region, scale){
+  var R = aggGeom(region);
+  var byMonth = ee.List.sequence(0,11).map(function(m){
+    m = ee.Number(m);
+    var subset = ic.filter(ee.Filter.calendarRange(m, m, 'month'));
+    var mImg = ee.Image(subset.mean());
+    var val = mImg.select('MRBI').reduceRegion({
+      reducer: ee.Reducer.mean(), geometry: R, scale: scale, bestEffort:true, maxPixels:5e13, tileScale:2
+    }).get('MRBI');
+    return ee.Dictionary({month: m, mrbi: val});
+  });
+  return ee.List(byMonth);
+}
+
+function alignmentScore(ic, region, scale, expectedMonths){
+  var R = aggGeom(region);
+  var means = monthlyMeansByAOI(ic, R, scale);
+  var vals = ee.List(means.map(function(d){ return ee.Dictionary(d).get('mrbi'); }));
+  var valsSorted = vals.sort();
+  var pIndex = ee.Number(valsSorted.size()).multiply(0.6).floor();
+  var p60 = ee.Number(ee.Algorithms.If(valsSorted.size().gt(0), valsSorted.get(pIndex), 0));
+  var expList = ee.List(expectedMonths);
+  var feats = ee.FeatureCollection(means.map(function(d){
+    d = ee.Dictionary(d);
+    var m = ee.Number(d.get('month'));
+    var v = ee.Number(d.get('mrbi'));
+    var ok = ee.Algorithms.If(v, ee.Number(v).gte(p60), false);
+    var exp = expList.contains(m);
+    return ee.Feature(null, {month:m, mrbi:v, ok: ok, expected: exp});
+  }));
+  return feats.filter(ee.Filter.eq('expected', true)).aggregate_sum('ok');
+}
+
+/* ============= ANOMALY ============= */
+function explainDrivers(sign){
+  return (sign > 0)
+    ? 'Possible drivers: above-average rainfall, mild temperatures, moist soils, good radiation. Local management (irrigation/ornamentals) may amplify.'
+    : 'Possible drivers: water deficit, heat/cold waves at key moments, persistent cloudiness (masking blooms), herbivory, or phenological shift.';
+}
+function evaluateAnomaly(startStr, endStr, currentStats, srcLabel){
+  anomalyPanel.clear();
+  anomalyPanel.add(ui.Label({value:'🔎 Anomaly assessment', style:{fontWeight:'bold'}}));
+  if (!currentStats || currentStats.MRBI_mean === undefined){
+    anomalyPanel.add(ui.Label('Not enough data yet to estimate anomaly.'));
+    return;
+  }
+  var climoComposite = buildClimatologyComposite(startStr, endStr, CLIMO_BACK_YEARS);
+  var climoProcessed = ee.Algorithms.If(
+    ee.Algorithms.IsEqual(climoComposite.bandNames().size(), 0), null,
+    addIndices(spectralUnmixing(ee.Image(climoComposite)))
+  );
+  ee.Algorithms.If(climoProcessed, ee.Image(climoProcessed), null);
+  var statsClimo = ee.Algorithms.If(climoProcessed,
+    ee.Image(climoProcessed).select(['MRBI','f_flowers']).reduceRegion({
+      reducer: ee.Reducer.mean(), geometry: aggGeom(AOI), scale: SUM_SCALE, bestEffort: true, maxPixels: 5e13, tileScale: 2
+    }), null);
+
+  ee.Dictionary(statsClimo).evaluate(function(base){
+    if (!base){
+      anomalyPanel.add(ui.Label('Could not build a baseline (climatology) for this AOI/date range.'));
+      anomalyPanel.add(ui.Label('Tip: widen the date range (e.g., 90 days) or use a slightly larger AOI.'));
+      return;
+    }
+    var nowMRBI = Number(currentStats.MRBI_mean || 0);
+    var baseMRBI = Number(base.MRBI_mean || 0);
+    var delta = nowMRBI - baseMRBI;
+    var absDelta = Math.abs(delta);
+    var level = (absDelta >= ANOM_STRONG) ? 'Strong' : (absDelta >= ANOM_MOD ? 'Moderate' : 'Low/Normal');
+    var color = (absDelta >= ANOM_STRONG) ? '#b91c1c' : (absDelta >= ANOM_MOD ? '#ca8a04' : '#16a34a');
+    var line =
+      'Anomaly ' + level + ' in MRBI ('+srcLabel+'): Δ=' + (delta>=0?'+':'') + delta.toFixed(3)
+      + ' (current '+ nowMRBI.toFixed(3) + ' vs. climate ' + baseMRBI.toFixed(3) + ').';
+    anomalyPanel.add(ui.Label({value: line, style:{color: color, fontWeight:'bold'}}));
+    anomalyPanel.add(ui.Label(explainDrivers(delta)));
+    anomalyPanel.add(ui.Label('Note: Remote signal. Validate in the field (GLOBE/iNaturalist) and consider clouds, sun angle, and land-use mosaics.', {color:'#6b7280'}));
+
+    if (lastResult){
+      var seriesForChart = lastResult.seriesOk.sort('system:time_start', false).limit(12);
+      var fcNow = seriesMeanFC(seriesForChart.select(['MRBI']), AOI, SUM_SCALE).map(function(f){ return ee.Feature(f).set('group','Current'); });
+      var dates = fcNow.aggregate_array('date');
+      var baseMR = baseMRBI;
+      var baseFC = ee.FeatureCollection(dates.map(function(d){
+        return ee.Feature(null, {date: d, MRBI: baseMR, group: 'Climatology'});
+      }));
+      var ch = ui.Chart.feature.groups({
+        features: fcNow.merge(baseFC),
+        xProperty: 'date',
+        yProperties: ['MRBI'],
+        seriesProperty: 'group'
+      }).setOptions({title:'MRBI: Current vs Climatology', lineWidth:2});
+      anomalyPanel.add(ch);
+    }
+  });
+}
+
+/* ============= PIPELINE & VISUALIZATION ============= */
+function buildPipeline(source, start, end){
+  var baseIC = (source === 'HLS') ? getHLS(start, end) : getS2Loose(start, end);
+  var monthly = monthSeries(baseIC, start, end);
+  var processedMonthly = ee.ImageCollection(monthly.map(function(im){
+    var img = ee.Image(im);
+    return ee.Algorithms.If(img.bandNames().size().gt(0), addIndices(spectralUnmixing(img)), img);
+  }));
+  var seriesOk = ensureNonEmpty(processedMonthly, start, end);
+  var latest = seriesOk.sort('system:time_start', false).first();
+  return {seriesOk: seriesOk, latest: latest};
+}
+
+var phenogHint; // ref to label
+function visualize(latest, seriesOk, srcLabel){
+  map.layers().reset([]); map.setOptions('HYBRID'); map.centerObject(AOI, 7); drawAOIOutline();
+
+  var baseRGB = quickRGB(startBox.getValue(), endBox.getValue());
+  map.addLayer(baseRGB, {min:0, max:0.3, gamma:1.4}, 'S2 Quick RGB (base)', true);
+
+  var hasBands = latest.bandNames().size().gt(0);
+  var rgb = ee.Image(ee.Algorithms.If(hasBands, latest, ee.Image.constant([0,0,0]).rename(['B4','B3','B2']).float()));
+  map.addLayer(rgb, {bands:['B4','B3','B2'], min:0, max:0.3, gamma:1.4}, 'Natural Color ('+srcLabel+')', true);
+
+  map.addLayer(latest.select('MRBI'), {min:-0.2,max:0.6, palette:['blue','white','yellow','orange','red']}, 'MRBI', true);
+  map.addLayer(latest.select('f_flowers'), {min:0,max:0.5, palette:['000000','ffff00','ff6600']}, 'Flower fraction', false);
+  map.addLayer(latest.select('NDVI_RE'), {min:0,max:0.8, palette:['red','yellow','green']}, 'NDVI-RE', false);
+  map.addLayer(latest.select('p_bloom'), {min:0,max:1, palette:['000004','2c7fb8','7fcdbb','c7e9b4','ffffe5']}, 'Bloom Prob.', false);
+
+  latest.select(['MRBI','bloom_probability','f_flowers','residual']).reduceRegion({
+    reducer: ee.Reducer.mean().combine({reducer2: ee.Reducer.percentile([90]), sharedInputs:true}),
+    geometry: aggGeom(AOI), scale: SUM_SCALE, bestEffort:true, maxPixels:5e13, tileScale: 2
+  }).evaluate(function(s){
+    s = s || {};
+    statsPanel.clear();
+    statsPanel.add(ui.Label({value:'📈 AOI Statistics ('+srcLabel+')', style:{fontWeight:'bold'}}));
+    statsPanel.add(ui.Label('Mean MRBI: ' + numStr(s.MRBI_mean)));
+    statsPanel.add(ui.Label('Mean bloom probability: ' + numStr(s.bloom_probability_mean,1) + '%'));
+    statsPanel.add(ui.Label('Mean flower fraction: ' + pctStr(s.f_flowers_mean)));
+    statsPanel.add(ui.Label('MRBI p90: ' + numStr(s.MRBI_p90)));
+
+    var thMrbi = mrbiThr.getValue();
+    var thFlo  = flowersThr.getValue();
+    bloomAreaStats(latest, AOI, thMrbi, thFlo, SUM_SCALE).evaluate(function(a){
+      var aB = km2(a && a.areaBloom); var aT = km2(a && a.areaTotal);
+      var perc = (aB && aT) ? (100*aB/aT) : null;
+      var line = 'Bloom area (≥MRBI '+thMrbi.toFixed(2)+', flowers ≥'+thFlo.toFixed(2)+'): '
+                 + (aB? aB.toFixed(1)+' km²':'—') + (perc!=null ? (' ('+perc.toFixed(1)+'% of AOI)') : '');
+      statsPanel.add(ui.Label(line));
+    });
+
+    var expMonths = expectedMonthsForAOI(aoiDropdown.getValue(), AOI);
+    var seriesForChartEval = seriesOk.sort('system:time_start', false).limit(12);
+    var means = monthlyMeansByAOI(seriesForChartEval, AOI, SUM_SCALE);
+    means.evaluate(function(list){
+      var peak = {month:null, mrbi:-1e9};
+      (list||[]).forEach(function(d){ if (d.mrbi!=null && Number(d.mrbi) > peak.mrbi){ peak={month:d.month, mrbi:Number(d.mrbi)}; }});
+      var peakTxt = (peak.month!=null) ? (MONTH_NAMES[peak.month]+' ('+peak.mrbi.toFixed(3)+')') : '—';
+      statsPanel.add(ui.Label('Peak month (latest data): ' + peakTxt));
+
+      alignmentScore(seriesForChartEval, AOI, SUM_SCALE, expMonths).evaluate(function(sc){
+        var score = Number(sc||0);
+        var denom = expMonths.length || 1;
+        var align = Math.min(100, Math.max(0, (score/denom)*100));
+        var tag = (align>=70)? 'high' : (align>=40 ? 'medium' : 'low');
+        statsPanel.add(ui.Label('Alignment with expected season: ' + align.toFixed(0) + '% ('+tag+')'));
+
+        var ok = (Number(s.MRBI_mean || 0) > thMrbi) && (Number(s.f_flowers_mean || 0) > thFlo);
+        statsPanel.add(ui.Label({value: ok ? '✅ Significant bloom' : '❌ No strong bloom',
+                                 style:{color: ok ? '#16a34a' : '#dc2626', fontWeight:'bold'}}));
+      });
+    });
+
+    renderLore(aoiDropdown.getValue(), s, srcLabel);
+    evaluateAnomaly(startBox.getValue(), endBox.getValue(), s, srcLabel);
+  });
+
+  // --- AOI monthly series (12 samples), dynamic Y properties ---
+  chartsPanel.clear();
+  var seriesForChart = seriesOk.sort('system:time_start', false).limit(12);
+  var fcAOI_raw = seriesMeanFC(seriesForChart, AOI, SUM_SCALE);
+
+  var anyValidFilter = ee.Filter.or(
+    ee.Filter.notNull(['MRBI']),
+    ee.Filter.notNull(['NDVI_RE']),
+    ee.Filter.notNull(['bloom_probability']),
+    ee.Filter.notNull(['f_flowers']),
+    ee.Filter.notNull(['p_bloom'])
+  );
+  var fcAOI = ee.FeatureCollection(fcAOI_raw.filter(anyValidFilter));
+
+  var yCandidates = ee.List(['MRBI','NDVI_RE','bloom_probability','f_flowers','p_bloom']);
+  var yKeep = ee.List(yCandidates.map(function(p){
+    p = ee.String(p);
+    var n = fcAOI.filter(ee.Filter.notNull([p])).size();
+    return ee.Algorithms.If(n.gt(0), p, null);
+  })).removeAll([null]);
+
+  yKeep.evaluate(function(ys){
+    if (!ys || ys.length === 0){
+      chartsPanel.add(ui.Label('No valid monthly data to plot for this AOI/date range.'));
+      return;
+    }
+    var seriesTitle = 'Monthly time series ('+srcLabel+')';
+    var seriesChart = ui.Chart.feature.byFeature({
+      features: fcAOI, xProperty:'date', yProperties: ys
+    }).setOptions({title: seriesTitle, lineWidth: 2});
+    chartsPanel.add(seriesChart);
+  });
+
+  // Phenogram on click
+  var ph = ui.Label('📍 Click map for phenogram (MRBI vs NDVI_RE)');
+  chartsPanel.add(ph); phenogHint = ph;
+  var pointPanel = ui.Panel(); chartsPanel.add(pointPanel);
+
+  map.onClick(function(coords){
+    pointPanel.clear();
+
+    var buf = ee.Number(SUM_SCALE).multiply(3); // ~600 m if SUM_SCALE=200
+    var pt = ee.Geometry.Point([coords.lon, coords.lat]).buffer(buf);
+
+    var seriesForPt = seriesOk.sort('system:time_start', false).limit(12);
+    var fcPtRaw = seriesMeanFC(seriesForPt.select(['MRBI','NDVI_RE']), pt, SUM_SCALE);
+    var fcPt = ee.FeatureCollection(fcPtRaw.filter(ee.Filter.notNull(['MRBI','NDVI_RE'])));
+
+    fcPt.size().evaluate(function(n){
+      if (!n || n === 0){
+        pointPanel.add(ui.Label('📍 No valid data at this point (cloud/mask). Try clicking nearby or enlarging the area.'));
+        return;
+      }
+      var chart = ui.Chart.feature.byFeature({
+        features: fcPt,
+        xProperty: 'date',
+        yProperties: ['MRBI','NDVI_RE']
+      }).setOptions({title:'Phenogram (MRBI vs NDVI_RE)', lineWidth:2});
+      pointPanel.add(chart);
+    });
+  });
+}
+
+/* ============= RUN with fallback ============= */
+var lastResult = null;
+function buildAndVisualize(){
+  var start = startBox.getValue(), end = endBox.getValue(), src = sensorSelect.getValue();
+  var primary = buildPipeline(src, start, end);
+  primary.seriesOk.size().evaluate(function(n){
+    if (n && n > 0){
+      var latest = primary.seriesOk.sort('system:time_start', false).first();
+      visualize(latest, primary.seriesOk, (src === 'HLS' ? 'HLSS30 monthly' : 'S2 monthly'));
+      lastResult = {latest: latest, seriesOk: primary.seriesOk, start:start, end:end, src:src};
+    } else {
+      print('⛅ No valid months in '+src+' — retrying with Sentinel-2 monthly (loose).');
+      var fb = buildPipeline('S2', start, end);
+      fb.seriesOk.size().evaluate(function(m){
+        if (m && m > 0){
+          var latest2 = fb.seriesOk.sort('system:time_start', false).first();
+          visualize(latest2, fb.seriesOk, 'S2 monthly (fallback)');
+          lastResult = {latest: latest2, seriesOk: fb.seriesOk, start:start, end:end, src:'S2'};
+        } else {
+          print('❌ No valid months either. Showing single-period composite.');
+          var composite = getS2Loose(start, end).median();
+          var processed = addIndices(spectralUnmixing(composite)).set('system:time_start', ee.Date(end).millis());
+          var oneIC = ee.ImageCollection([processed]);
+          visualize(processed, oneIC, 'S2 single composite');
+          lastResult = {latest: processed, seriesOk: oneIC, start:start, end:end, src:'S2'};
+        }
+      });
+    }
+  });
+}
+runBtn.onClick(buildAndVisualize);
+
+/* ============= LEGENDS ============= */
+var legend = ui.Panel({style:{position:'top-right', padding:'8px', backgroundColor:'rgba(255,255,255,0.9)'}});
+var legendTitleMRBI = ui.Label('MRBI', {fontWeight:'bold'});
+legend.add(legendTitleMRBI);
+[
+  {c:'blue',   t:'-0.2'}, {c:'white', t:'0.0'},
+  {c:'yellow', t:'0.2'},  {c:'orange',t:'0.4'},
+  {c:'red',    t:'0.6+'}
+].forEach(function(it){
+  var row = ui.Panel({layout: ui.Panel.Layout.flow('horizontal')});
+  row.add(ui.Label('', {backgroundColor: it.c, padding:'8px', margin:'2px', width:'16px'}));
+  row.add(ui.Label(it.t, {margin:'4px 0 0 6px'}));
+  legend.add(row);
+});
+map.add(legend);
+
+// Bloom Probability legend
+var legendPB = ui.Panel({style:{position:'top-right', padding:'8px', backgroundColor:'rgba(255,255,255,0.9)', margin:'8px 0 0 0'}});
+var legendTitlePB   = ui.Label('Bloom Prob.', {fontWeight:'bold'});
+legendPB.add(legendTitlePB);
+[
+  {c:'#000004', t:'0.00'},
+  {c:'#2c7fb8', t:'0.25'},
+  {c:'#7fcdbb', t:'0.50'},
+  {c:'#c7e9b4', t:'0.75'},
+  {c:'#ffffe5', t:'1.00'}
+].forEach(function(it){
+  var row2 = ui.Panel({layout: ui.Panel.Layout.flow('horizontal')});
+  row2.add(ui.Label('', {backgroundColor: it.c, padding:'8px', margin:'2px', width:'16px'}));
+  row2.add(ui.Label(it.t, {margin:'4px 0 0 6px'}));
+  legendPB.add(row2);
+});
+map.add(legendPB);
+
+/* ============= INIT (auto-run) ============= */
+print('🌼 BloomWatch — App ready for demo (iframe). Loading…');
+map.centerObject(AOI, 7);
+drawAOIOutline();
+map.addLayer(quickRGB(START_DATE, END_DATE), {min:0, max:0.3, gamma:1.4}, 'S2 Quick RGB (base)', true);
+
+// Initial lore & season hint
+renderLore(aoiDropdown.getValue(), null, sensorSelect.getValue()==='HLS' ? 'HLSS30' : 'S2');
+refreshSeasonHint();
+
+// Run pipeline at load
+buildAndVisualize();
+</script>
+
+<script>
+// ===== Add handler for "Ver código (GEE)" / "View code (GEE)"
+(function addViewCodeButton(){
+  const btn = document.getElementById('view-gee-code');
+  if(!btn) return;
+  btn.addEventListener('click', ()=>{
+    try{
+      const el = document.getElementById('gee-source');
+      const code = el ? el.textContent : '// code not found\n';
+      const blob = new Blob([code], {type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const w = window.open(url, '_blank', 'noopener');
+      if(!w){ alert(document.documentElement.lang==='en' ? 'Please allow pop-ups to view the code.' : 'Habilitá ventanas emergentes para ver el código.'); }
+      setTimeout(()=> URL.revokeObjectURL(url), 120000);
+    }catch(e){
+      alert((document.documentElement.lang==='en'?'Could not open code: ':'No se pudo abrir el código: ') + e.message);
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
