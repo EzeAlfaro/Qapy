@@ -315,6 +315,16 @@
     .acc-content{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;padding:0 1.25rem}
     .acc-content.open{padding:0 1.25rem 1rem 1.25rem}
     .acc-item.open .acc-icon{transform:rotate(90deg)}
+    /* Quick actions (open/copy GEE link) */
+    .gee-quick-actions{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:12px}
+    .gee-quick-note{font-size:.95rem;text-align:center;opacity:.85;margin-top:.5rem}
+    /* Demo alert */
+    .demo-alert{
+      margin:10px auto 0;max-width:900px;background:rgba(255,210,63,.12);
+      border:1px solid rgba(255,210,63,.45);color:#fff;padding:14px 16px;border-radius:14px;
+      box-shadow:var(--shadow);
+    }
+    .demo-alert strong{color:#ffd23f}
     @media(max-width:768px){
       .hero{padding:2.5rem 1.5rem}
       .section{padding:2rem 1.5rem}
@@ -480,6 +490,27 @@
         </p>
       </div>
 
+      <!-- Quick actions for full GEE App -->
+      <div class="gee-quick-actions">
+        <a id="open-gee-app" class="cta-button" target="_blank" rel="noopener" data-i18n="open_app_btn">
+          Abrir App completa (nueva pestaña)
+        </a>
+        <button id="copy-gee-url" class="cta-button" style="background:#2c7fb8" data-i18n="copy_app_btn">
+          Copiar enlace del App
+        </button>
+      </div>
+      <p class="gee-quick-note" data-i18n="open_app_note">
+        Demo: las funciones de Export (GeoTIFF/CSV) están deshabilitadas por ahora. Se incorporarán en una versión próxima.
+      </p>
+
+      <!-- Demo alert -->
+      <div class="demo-alert">
+        <strong data-i18n="demo_alert_title">Modo demostración:</strong>
+        <span data-i18n="demo_alert_text">
+          Las exportaciones no están disponibles en esta demo. Están planificadas para futuras versiones públicas del App.
+        </span>
+      </div>
+
       <!-- MRBI Legend -->
       <div style="display:flex;justify-content:center;margin-top:1rem">
         <div class="mrbi-legend">
@@ -537,34 +568,6 @@
     </section>
   </div>
 
-  <!-- CTA -->
-  <div class="container">
-    <section class="cta-section">
-      <h2 class="cta-title" data-i18n="cta_title">¡Unite a la Misión Global!</h2>
-      <p data-i18n="cta_text">Sumate a GLOBE Observer y/o iNaturalist para validar las floraciones observadas desde el espacio.</p>
-      <div>
-        <a href="https://observer.globe.gov/" target="_blank" rel="noopener" class="cta-button" data-i18n="cta_btn_globe">Participar en GLOBE</a>
-        <a href="https://www.inaturalist.org/observations" target="_blank" rel="noopener" class="cta-button" style="background:#2c7fb8" data-i18n="cta_btn_inat">Ver/Reportar en iNaturalist</a>
-      </div>
-    </section>
-  </div>
-
-  <!-- Impact -->
-  <div class="container">
-    <section class="section">
-      <h2 class="section-title" data-i18n="impact_title">Impacto del Proyecto</h2>
-      <p data-i18n="impact_intro">BloomWatch conecta ciencia y gestión territorial.</p>
-      <div class="impact-list">
-        <div class="impact-item"><div><h4 data-i18n="imp_agri_t">Agricultura</h4><p data-i18n="imp_agri_d">Optimización de polinización y predicción de rendimientos.</p></div></div>
-        <div class="impact-item"><div><h4 data-i18n="imp_health_t">Salud pública</h4><p data-i18n="imp_health_d">Alertas de polen para alergias estacionales.</p></div></div>
-        <div class="impact-item"><div><h4 data-i18n="imp_poll_t">Polinizadores</h4><p data-i18n="imp_poll_d">Mapeo de recursos florales críticos.</p></div></div>
-        <div class="impact-item"><div><h4 data-i18n="imp_clim_t">Cambio climático</h4><p data-i18n="imp_clim_d">Floraciones como bioindicadores.</p></div></div>
-        <div class="impact-item"><div><h4 data-i18n="imp_inv_t">Invasoras</h4><p data-i18n="imp_inv_d">Detección temprana por patrones de floración.</p></div></div>
-        <div class="impact-item"><div><h4 data-i18n="imp_pest_t">Plagas</h4><p data-i18n="imp_pest_d">Riesgos basados en disponibilidad floral.</p></div></div>
-      </div>
-    </section>
-  </div>
-
   <!-- ===== User Manual (Accordion) ===== -->
   <div class="container">
     <section class="section" id="manual">
@@ -618,6 +621,7 @@
               <li>Export raster: GeoTIFF con MRBI, p_bloom, f_flowers, NDVI-RE.</li>
               <li>Export CSV: serie mensual del AOI.</li>
               <li>Permalink: copia un enlace con parámetros (fechas, sensor, AOI, umbrales).</li>
+              <li><strong data-i18n="demo_inline_note">Nota:</strong> <span data-i18n="demo_inline_text">en esta demo, las exportaciones están deshabilitadas; se habilitarán en una versión futura.</span></li>
               <li>Consejo: empezá con MRBI 0.20–0.35 y Flores 0.08–0.20; ajustá mirando MRBI+RGB.</li>
             </ul>
           </div>
@@ -684,7 +688,7 @@
     </div>
   </footer>
 
-  <!-- Simple i18n -->
+  <!-- Simple i18n + wiring -->
   <script>
     const dict = {
       es:{
@@ -777,11 +781,23 @@
 <li>Export CSV: serie mensual del AOI.</li>
 <li>Permalink: copia un enlace con parámetros (fechas, sensor, AOI, umbrales).</li>
 <li>Consejo: empezá con MRBI 0.20–0.35 y Flores 0.08–0.20; ajustá mirando MRBI+RGB.</li>`,
+
+        /* ===== Troubleshooting ES ===== */
         man_trouble_title:"Solución de problemas",
         man_trouble_list:`<li>“Sin meses válidos”: probá ampliar fechas o usar S2 (fallback automático).</li>
 <li>“Composite único”: periodo nublado/escaso; probá 90 días o temporada típica.</li>
 <li>Fenograma vacío: nubes/máscara; clic cercano o usa un parche más grande.</li>
-<li>Series planas: mezcla de 0–1 y 0–100; mirá p_bloom, MRBI y f_flowers por separado.</li>`
+<li>Series planas: mezcla de 0–1 y 0–100; mirá p_bloom, MRBI y f_flowers por separado.</li>`,
+
+        /* ===== Quick actions ES ===== */
+        open_app_btn:"Abrir App completa (nueva pestaña)",
+        copy_app_btn:"Copiar enlace del App",
+        open_app_note:"Demo: las funciones de Export (GeoTIFF/CSV) están deshabilitadas por ahora. Se incorporarán en una versión próxima.",
+        copied_toast:"¡Enlace copiado!",
+        demo_alert_title:"Modo demostración:",
+        demo_alert_text:"Las exportaciones no están disponibles en esta demo. Están planificadas para futuras versiones públicas del App.",
+        demo_inline_note:"Nota:",
+        demo_inline_text:"en esta demo, las exportaciones están deshabilitadas; se habilitarán en una versión futura."
       },
       en:{
         brand:"BloomWatch Global",
@@ -873,11 +889,23 @@
 <li>Export CSV: monthly AOI time series.</li>
 <li>Permalink: copy a link with parameters (dates, sensor, AOI, thresholds).</li>
 <li>Tip: start with MRBI 0.20–0.35 and Flowers 0.08–0.20; tune by inspecting MRBI+RGB.</li>`,
+
+        /* ===== Troubleshooting EN ===== */
         man_trouble_title:"Troubleshooting",
         man_trouble_list:`<li>“No valid months”: extend dates or use S2 (automatic fallback).</li>
 <li>“Single composite”: cloudy/sparse period; try 90 days or seasonal windows.</li>
 <li>Empty phenogram: clouds/masks; click nearby or use a larger homogeneous patch.</li>
-<li>Flat series: mixing 0–1 and 0–100; compare p_bloom, MRBI and f_flowers separately.</li>`
+<li>Flat series: mixing 0–1 and 0–100; compare p_bloom, MRBI and f_flowers separately.</li>`,
+
+        /* ===== Quick actions EN ===== */
+        open_app_btn:"Open full App (new tab)",
+        copy_app_btn:"Copy App link",
+        open_app_note:"Demo: Export (GeoTIFF/CSV) features are disabled for now. They will be added in an upcoming version.",
+        copied_toast:"Link copied!",
+        demo_alert_title:"Demo mode:",
+        demo_alert_text:"Exports are not available in this demo. They’re planned for future public releases of the App.",
+        demo_inline_note:"Note:",
+        demo_inline_text:"in this demo, exports are disabled; they will be enabled in a future version."
       }
     };
 
@@ -928,6 +956,36 @@
       c.classList.add('open');
       c.style.maxHeight = c.scrollHeight + 'px';
     }
+
+    // Link "Open App" to the iframe src and enable "Copy link"
+    (function wireGEEActions(){
+      const iframe = document.querySelector('.iframe-container iframe');
+      const openBtn = document.getElementById('open-gee-app');
+      const copyBtn = document.getElementById('copy-gee-url');
+
+      const url = iframe?.getAttribute('src');
+      if (url && openBtn){
+        openBtn.href = url;
+      }
+
+      if (copyBtn){
+        copyBtn.addEventListener('click', async ()=>{
+          try{
+            const link = url || '';
+            await navigator.clipboard.writeText(link);
+            // mini toast
+            const t = document.createElement('div');
+            const lang = document.documentElement.lang || 'es';
+            t.textContent = (dict[lang]||dict.es).copied_toast || 'Copiado';
+            t.style.position='fixed'; t.style.bottom='24px'; t.style.left='50%'; t.style.transform='translateX(-50%)';
+            t.style.background='rgba(0,0,0,.8)'; t.style.color='#fff'; t.style.padding='10px 16px';
+            t.style.borderRadius='10px'; t.style.zIndex='9999'; t.style.boxShadow='0 10px 30px rgba(0,0,0,.25)';
+            document.body.appendChild(t);
+            setTimeout(()=> t.remove(), 1200);
+          }catch(e){ console.warn('Clipboard error', e); }
+        });
+      }
+    })();
   </script>
 </body>
 </html>
